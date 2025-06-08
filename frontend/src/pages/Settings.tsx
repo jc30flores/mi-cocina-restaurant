@@ -56,10 +56,10 @@ const Settings = () => {
   return (
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
-        <PageHeader title="Settings" className="flex justify-between items-center mb-6">
+        <PageHeader title="Configuración" className="flex justify-between items-center mb-6">
           <div className="flex items-center">
             <SettingsIcon className="h-5 w-5 mr-2 text-muted-foreground" />
-            <p className="text-muted-foreground">Configure your restaurant POS system</p>
+            <p className="text-muted-foreground">Configura tu sistema POS de restaurante</p>
           </div>
         </PageHeader>
 
@@ -68,35 +68,35 @@ const Settings = () => {
             <TabsList className="mb-8">
               <TabsTrigger value="restaurant" className="flex items-center gap-2">
                 <Building className="h-4 w-4" />
-                <span>Restaurant</span>
+                <span>Restaurante</span>
               </TabsTrigger>
               <TabsTrigger value="tables" className="flex items-center gap-2">
                 <Map className="h-4 w-4" />
-                <span>Tables</span>
+                <span>Mesas</span>
               </TabsTrigger>
               <TabsTrigger value="payment" className="flex items-center gap-2">
                 <CreditCard className="h-4 w-4" />
-                <span>Payment</span>
+                <span>Pagos</span>
               </TabsTrigger>
               <TabsTrigger value="staff" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
-                <span>Staff</span>
+                <span>Personal</span>
               </TabsTrigger>
               <TabsTrigger value="notifications" className="flex items-center gap-2">
                 <Bell className="h-4 w-4" />
-                <span>Notifications</span>
+                <span>Notificaciones</span>
               </TabsTrigger>
               <TabsTrigger value="printers" className="flex items-center gap-2">
                 <Printer className="h-4 w-4" />
-                <span>Printers</span>
+                <span>Impresoras</span>
               </TabsTrigger>
               <TabsTrigger value="language" className="flex items-center gap-2">
                 <Languages className="h-4 w-4" />
-                <span>Language</span>
+                <span>Idioma</span>
               </TabsTrigger>
               <TabsTrigger value="system" className="flex items-center gap-2">
                 <Database className="h-4 w-4" />
-                <span>System</span>
+                <span>Sistema</span>
               </TabsTrigger>
             </TabsList>
           </div>
