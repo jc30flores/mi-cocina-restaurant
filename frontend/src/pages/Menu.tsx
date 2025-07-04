@@ -156,8 +156,8 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
       await updateItemCustomizations(created.id, { groups: newCustoms });
       
       toast({
-        title: t("Product added"),
-        description: t("The product has been added to the menu"),
+        title: t("Producto agregado"),
+        description: t("El producto ha sido agregado al menú"),
       });
       
       setIsAddDialogOpen(false);
@@ -175,7 +175,7 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
       console.error("Error adding menu item:", error);
       toast({
         title: t("Error"),
-        description: t("Failed to add the product. Please try again."),
+        description: t("No se pudo agregar el producto. Intenta nuevamente."),
         variant: "destructive"
       });
     }
@@ -196,8 +196,8 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
         await updateItemCustomizations(editingItem.id, { groups: editCustoms });
         
         toast({
-          title: t("Product updated"),
-          description: t("The product has been updated successfully"),
+          title: t("Producto actualizado"),
+          description: t("El producto se actualizó correctamente"),
         });
         
         setIsEditDialogOpen(false);
@@ -207,7 +207,7 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
         console.error("Error updating menu item:", error);
         toast({
           title: t("Error"),
-          description: t("Failed to update the product. Please try again."),
+          description: t("No se pudo actualizar el producto. Intenta nuevamente."),
           variant: "destructive"
         });
       }
@@ -255,10 +255,10 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
         <h3 className="text-xl font-medium">{title}</h3>
         <div className="flex gap-2">
           <Button variant="secondary" size="sm" onClick={() => setAddSubOpen(true)}>
-            <Plus className="h-4 w-4 mr-1" /> {t("Add Subcategory")}
+            <Plus className="h-4 w-4 mr-1" /> {t("Agregar Subcategoría")}
           </Button>
           <Button size="sm" onClick={handleAddButtonClick}>
-            <Plus className="h-4 w-4 mr-1" /> {t("Add Product")}
+            <Plus className="h-4 w-4 mr-1" /> {t("Agregar Producto")}
           </Button>
         </div>
       </div>
@@ -316,9 +316,9 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
         <DialogContent className="sm:max-w-[600px] p-0 flex flex-col max-h-[80vh]">
           <DialogHeader className="p-4 pb-2">
-            <DialogTitle>{t("Add Product")}</DialogTitle>
+            <DialogTitle>{t("Agregar Producto")}</DialogTitle>
             <DialogDescription>
-              {t("Enter the product information to add it to the menu.")}
+              {t("Ingresa la información del producto para agregarlo al menú.")}
             </DialogDescription>
           </DialogHeader>
           <div className="max-h-[80vh] overflow-y-auto p-4 flex flex-col gap-4">
@@ -453,10 +453,10 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
           </div>
           <DialogFooter className="p-4 pt-2">
             <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
-              {t("Cancel")}
+              {t("Cancelar")}
             </Button>
             <Button onClick={handleAddItem}>
-              {t("Save")}
+              {t("Guardar")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -613,10 +613,10 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
           )}
           <DialogFooter className="p-4 pt-2">
             <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
-              {t("Cancel")}
+              {t("Cancelar")}
             </Button>
             <Button onClick={handleEditItem}>
-              {t("Save")}
+              {t("Guardar")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -682,7 +682,7 @@ const Menu = () => {
   return (
     <MainLayout>
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">{t("Menu Management")}</h1>
+        <h1 className="text-3xl font-bold mb-6">{t("Gestión del Menú")}</h1>
         
         {loading ? (
           <div className="flex justify-center items-center h-64">
@@ -708,10 +708,10 @@ const Menu = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem onSelect={() => setAddCatOpen(true)}>
-                      Add Category
+                      Agregar Categoría
                     </DropdownMenuItem>
                     <DropdownMenuItem onSelect={() => setEditCatOpen(true)}>
-                      Edit Categories
+                      Editar Categorías
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

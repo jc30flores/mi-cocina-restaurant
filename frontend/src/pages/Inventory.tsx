@@ -84,8 +84,8 @@ const InventoryList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['inventoryItems'] });
       toast({
-        title: t("Product added"),
-        description: t("The product has been added to the inventory"),
+        title: t("Producto agregado"),
+        description: t("El producto se agregó al inventario"),
       });
       setIsAddDialogOpen(false);
       // Reset form
@@ -100,7 +100,7 @@ const InventoryList = () => {
     onError: (error) => {
       toast({
         title: t("Error"),
-        description: (error as Error).message || t("Could not add the product"),
+        description: (error as Error).message || t("No se pudo agregar el producto"),
         variant: "destructive"
       });
     }
@@ -113,8 +113,8 @@ const InventoryList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['inventoryItems'] });
       toast({
-        title: t("Product updated"),
-        description: t("The product has been updated successfully"),
+        title: t("Producto actualizado"),
+        description: t("El producto se actualizó correctamente"),
       });
       setIsEditDialogOpen(false);
       setEditingItem(null);
@@ -122,7 +122,7 @@ const InventoryList = () => {
     onError: (error) => {
       toast({
         title: t("Error"),
-        description: (error as Error).message || t("Could not update the product"),
+        description: (error as Error).message || t("No se pudo actualizar el producto"),
         variant: "destructive"
       });
     }
@@ -141,7 +141,7 @@ const InventoryList = () => {
     onError: (error) => {
       toast({
         title: t("Error"),
-        description: (error as Error).message || t("Could not delete the product"),
+        description: (error as Error).message || t("No se pudo eliminar el producto"),
         variant: "destructive"
       });
     }
@@ -189,7 +189,7 @@ const InventoryList = () => {
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>{t("Error")}</AlertTitle>
         <AlertDescription>
-          {(error as Error).message || t("Could not load inventory")}
+          {(error as Error).message || t("No se pudo cargar el inventario")}
         </AlertDescription>
       </Alert>
     );
@@ -206,7 +206,7 @@ const InventoryList = () => {
             size={isMobile ? "sm" : "default"}
           >
             <Plus className="h-4 w-4" />
-            {t("Add Product")}
+            {t("Agregar Producto")}
           </Button>
         </CardHeader>
         <CardContent className="px-2 sm:px-6 overflow-auto">
@@ -286,9 +286,9 @@ const InventoryList = () => {
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>{t("Add Product")}</DialogTitle>
+            <DialogTitle>{t("Agregar Producto")}</DialogTitle>
             <DialogDescription>
-              {t("Enter product information to add it to inventory.")}
+              {t("Ingresa la información del producto para añadirlo al inventario.")}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -364,10 +364,10 @@ const InventoryList = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
-              {t("Cancel")}
+              {t("Cancelar")}
             </Button>
             <Button onClick={handleAddProduct} disabled={addItemMutation.isPending}>
-              {addItemMutation.isPending ? t("Saving...") : t("Save")}
+              {addItemMutation.isPending ? t("Guardando...") : t("Guardar")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -451,10 +451,10 @@ const InventoryList = () => {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
-              {t("Cancel")}
+              {t("Cancelar")}
             </Button>
             <Button onClick={handleEditProduct} disabled={updateItemMutation.isPending}>
-              {updateItemMutation.isPending ? t("Saving...") : t("Save")}
+              {updateItemMutation.isPending ? t("Guardando...") : t("Guardar")}
             </Button>
           </DialogFooter>
         </DialogContent>

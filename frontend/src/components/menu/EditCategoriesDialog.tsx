@@ -80,7 +80,7 @@ const EditCategoriesDialog: React.FC<Props> = ({ open, onOpenChange, categories,
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Edit Categories</DialogTitle>
+          <DialogTitle>Editar Categorías</DialogTitle>
         </DialogHeader>
         <div className="space-y-3 max-h-60 overflow-y-auto">
           {localCats.map((cat) => (
@@ -109,7 +109,7 @@ const EditCategoriesDialog: React.FC<Props> = ({ open, onOpenChange, categories,
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Close
+            Cerrar
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -118,15 +118,15 @@ const EditCategoriesDialog: React.FC<Props> = ({ open, onOpenChange, categories,
       <AlertDialog open={!!deleteTarget} onOpenChange={(o) => !o && setDeleteTarget(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete category?</AlertDialogTitle>
+            <AlertDialogTitle>¿Eliminar categoría?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will delete the category and all menu items linked to it. This action cannot be undone.
+              Esto eliminará la categoría y todos los productos vinculados. Esta acción no se puede deshacer.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction onClick={confirmDelete} className="bg-red-600 hover:bg-red-700">
-              Delete
+              Eliminar
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

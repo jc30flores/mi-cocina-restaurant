@@ -47,8 +47,8 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       
       toast({
-        title: "Clock Out",
-        description: "Employee has been clocked out successfully",
+        title: "Salida",
+        description: "El empleado ha cerrado su turno exitosamente",
       });
     } catch (error) {
       console.error(error);
@@ -168,12 +168,12 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
-                      <Button 
-                        size="sm" 
-                        variant="destructive" 
+                      <Button
+                        size="sm"
+                        variant="destructive"
                         onClick={() => handleClockOut(employee.id)}
                       >
-                        Clock Out
+                        Salida
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -213,8 +213,8 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       
       toast({
-        title: "Clock In",
-        description: "Employee has been clocked in successfully",
+        title: "Entrada",
+        description: "El empleado ha iniciado su turno correctamente",
       });
     } catch (error) {
       console.error(error);
@@ -270,11 +270,11 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
-                      <Button 
+                      <Button
                         size="sm"
                         onClick={() => handleClockIn(employee.id)}
                       >
-                        Clock In
+                        Entrada
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -32,32 +32,32 @@ const AddSubcategoryDialog: React.FC<Props> = ({ open, onOpenChange, categoryId,
 
   const handleCreate = async () => {
     const formatted = toTitle(name);
-    if (!formatted) { toast({title:"Name required",variant:"destructive"}); return; }
-    if (existingNames.includes(formatted.toLowerCase())) { toast({title:"Exists",variant:"destructive"}); return; }
+    if (!formatted) { toast({title:"Nombre requerido",variant:"destructive"}); return; }
+    if (existingNames.includes(formatted.toLowerCase())) { toast({title:"Ya existe",variant:"destructive"}); return; }
     try {
       await createSubcategory({ name: formatted, category_id: categoryId });
-      toast({title:"Subcategory created"});
+      toast({title:"Subcategoría creada"});
       onCreated();
       resetClose();
-    } catch(e){ console.error(e); toast({title:"Failed",variant:"destructive"}); }
+    } catch(e){ console.error(e); toast({title:"Error",variant:"destructive"}); }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
-          <DialogTitle>Add Subcategory</DialogTitle>
-          <DialogDescription>Enter subcategory name.</DialogDescription>
+          <DialogTitle>Agregar Subcategoría</DialogTitle>
+          <DialogDescription>Ingresa el nombre de la subcategoría.</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="sub-name" className="text-right">Name</Label>
+            <Label htmlFor="sub-name" className="text-right">Nombre</Label>
             <Input id="sub-name" value={name} onChange={(e)=>setName(e.target.value)} className="col-span-3" />
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={()=>onOpenChange(false)}>Cancel</Button>
-          <Button onClick={handleCreate}>Create</Button>
+          <Button variant="outline" onClick={()=>onOpenChange(false)}>Cancelar</Button>
+          <Button onClick={handleCreate}>Crear</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

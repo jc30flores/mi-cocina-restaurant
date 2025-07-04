@@ -35,10 +35,10 @@ const statusColors: Record<TableStatus, string> = {
 };
 
 const statusLabels: Record<TableStatus, string> = {
-  available: "Available",
-  pending: "Pending",
-  occupied: "Occupied",
-  reserved: "Reserved"
+  available: "Disponible",
+  pending: "Pendiente",
+  occupied: "Ocupada",
+  reserved: "Reservada"
 };
 
 const Tables = () => {
@@ -69,7 +69,7 @@ const Tables = () => {
         console.error("Error fetching tables:", error);
         toast({
           title: "Error",
-          description: "Failed to load tables. Please try again.",
+          description: "No se pudieron cargar las mesas. Inténtalo de nuevo.",
           variant: "destructive",
         });
       } finally {
@@ -110,8 +110,8 @@ const Tables = () => {
   return (
     <MainLayout>
       <div className="container mx-auto py-6">
-        <PageHeader 
-          title="Table Selection" 
+        <PageHeader
+          title="Selección de Mesa"
           className="mb-4"
         />
         
@@ -135,7 +135,7 @@ const Tables = () => {
                   <CardContent className="flex flex-col items-center justify-center p-6 h-24">
                     <span className="text-2xl font-bold">{table.number}</span>
                     <span className="text-sm mt-1">{statusLabels[table.status]}</span>
-                    <span className="text-xs text-muted-foreground">Capacity: {table.capacity}</span>
+                    <span className="text-xs text-muted-foreground">Capacidad: {table.capacity}</span>
                   </CardContent>
                 </Card>
               );
@@ -146,7 +146,7 @@ const Tables = () => {
         <Dialog open={showClientDialog} onOpenChange={setShowClientDialog}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Select Number of Clients for Table {selectedTable}</DialogTitle>
+              <DialogTitle>Selecciona número de clientes para la mesa {selectedTable}</DialogTitle>
             </DialogHeader>
             <div className="py-4">
               <div className="grid grid-cols-3 gap-2">
@@ -164,10 +164,10 @@ const Tables = () => {
             </div>
             <DialogFooter>
               <Button onClick={() => setShowClientDialog(false)} variant="outline">
-                Cancel
+                Cancelar
               </Button>
               <Button onClick={handleClientSelection}>
-                Confirm
+                Confirmar
               </Button>
             </DialogFooter>
           </DialogContent>
