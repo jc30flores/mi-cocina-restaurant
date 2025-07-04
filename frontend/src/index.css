@@ -5,34 +5,34 @@
 
 @layer base {
   :root {
-    /* Paleta de colores en modo oscuro */
-    --background: 0 0% 10%;
-    --foreground: 0 0% 100%;
+    /* Paleta de colores neutros */
+    --background: 0 0% 12%; /* #1e1e1e */
+    --foreground: 0 0% 94%; /* #f0f0f0 */
 
-    --card: 16.7 25.7% 13.7%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 18%; /* #2e2e2e */
+    --card-foreground: 0 0% 94%;
 
-    --popover: 16.7 25.7% 13.7%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 18%;
+    --popover-foreground: 0 0% 94%;
 
-    --primary: 19.3 90.7% 53.5%;
+    --primary: 0 0% 18%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 21.6 100% 50%;
+    --secondary: 0 0% 18%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 16.7 25.7% 18%;
-    --muted-foreground: 22.7 64.5% 52.5%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 22.7 64.5% 52.5%;
+    --accent: 0 0% 23%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 16.7 25.7% 18%;
-    --input: 16.7 25.7% 18%;
-    --ring: 19.3 90.7% 53.5%;
+    --border: 0 0% 33%; /* #555 */
+    --input: 0 0% 33%;
+    --ring: 0 0% 70%;
 
     --radius: 0.75rem;
 
@@ -48,44 +48,44 @@
     --pos-discount: 262 83% 58%;
     --pos-pay: 142 76% 36%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 12%;
+    --sidebar-foreground: 0 0% 94%;
+    --sidebar-primary: 0 0% 18%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 0 0% 94%;
+    --sidebar-border: 0 0% 33%;
+    --sidebar-ring: 0 0% 70%;
   }
 
   .dark {
-    --background: 0 0% 10%;
-    --foreground: 0 0% 100%;
+    --background: 0 0% 12%;
+    --foreground: 0 0% 94%;
 
-    --card: 16.7 25.7% 13.7%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 18%;
+    --card-foreground: 0 0% 94%;
 
-    --popover: 16.7 25.7% 13.7%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 18%;
+    --popover-foreground: 0 0% 94%;
 
-    --primary: 19.3 90.7% 53.5%;
+    --primary: 0 0% 18%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 21.6 100% 50%;
+    --secondary: 0 0% 18%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 16.7 25.7% 18%;
-    --muted-foreground: 22.7 64.5% 52.5%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 22.7 64.5% 52.5%;
+    --accent: 0 0% 23%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 16.7 25.7% 18%;
-    --input: 16.7 25.7% 18%;
-    --ring: 19.3 90.7% 53.5%;
+    --border: 0 0% 33%;
+    --input: 0 0% 33%;
+    --ring: 0 0% 70%;
 
     --pos-primary: 217.2 91.2% 59.8%;
     --pos-secondary: 39 100% 57%;
@@ -99,14 +99,14 @@
     --pos-discount: 262 83% 65%;
     --pos-pay: 142 70% 45%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 0 0% 12%;
+    --sidebar-foreground: 0 0% 94%;
+    --sidebar-primary: 0 0% 18%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 0 0% 94%;
+    --sidebar-border: 0 0% 33%;
+    --sidebar-ring: 0 0% 70%;
   }
 }
 
@@ -119,19 +119,21 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-overflow-scrolling: touch;
+    font-family: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
   }
 
   /* Improve responsive text sizing */
   h1 {
-    @apply text-2xl sm:text-3xl font-bold;
+    @apply text-lg sm:text-xl font-bold;
   }
 
   h2 {
-    @apply text-xl sm:text-2xl font-semibold;
+    @apply text-base sm:text-lg font-semibold;
   }
 
   h3 {
-    @apply text-lg sm:text-xl font-medium;
+    @apply text-base font-medium;
   }
 
   /* Fix horizontal scrollbar issues */

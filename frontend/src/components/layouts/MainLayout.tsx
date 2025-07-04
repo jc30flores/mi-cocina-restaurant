@@ -33,10 +33,11 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label }) => {
     <NavLink
       to={to}
       className={({ isActive }) => `
-        flex items-center px-3 py-2 rounded-lg whitespace-nowrap transition-colors
-        ${isActive 
-          ? "bg-primary text-primary-foreground" 
-          : "hover:bg-accent hover:text-accent-foreground"
+        flex items-center px-3 py-2 rounded-lg whitespace-nowrap transition-colors duration-300
+        text-[#d1d1d1]
+        ${isActive
+          ? "bg-primary text-white"
+          : "hover:bg-accent hover:text-white"
         }
       `}
     >
@@ -89,7 +90,7 @@ const MainLayout = ({ children, noPadding = false, fullWidth = false, hideNav = 
     <div className="min-h-screen flex flex-col">
       {/* Top Navigation Bar - Hidden when hideNav is true */}
       {!hideNav && (
-      <header className="bg-card shadow-sm border-b h-16 sticky top-0 z-30">
+      <header className="bg-[#1e1e1e] text-[#f0f0f0] border-b border-[#555] h-16 sticky top-0 z-30">
         <div className="h-full flex items-center justify-between px-2 sm:px-4">
           {/* Navigation Menu - Horizontal with overflow scrolling */}
           <div className="flex-1 overflow-x-auto scrollbar-none">
