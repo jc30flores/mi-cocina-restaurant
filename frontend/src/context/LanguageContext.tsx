@@ -498,11 +498,37 @@ const translations: TranslationDictionary = {
   "Start managing your restaurant operations": { en: "Start managing your restaurant operations" },
   
   // Additional translations for inventory service
-  "Are you sure you want to delete this product?": { en: "Are you sure you want to delete this product?" },
-  "Recipes": { en: "Recipes" },
-  "Inventory": { en: "Inventory" },
   "Suprimir imagen": { en: "Remove image" },
-  "Imagen": { en: "Image" }
+  "Imagen": { en: "Image" },
+  "Recetas": { en: "Recipes" },
+  "¿Estás seguro de que quieres eliminar este producto?": { en: "Are you sure you want to delete this product?" },
+  "Cargando...": { en: "Loading..." },
+  "Agregar Grupo": { en: "Add Group" },
+  "Editar Grupo": { en: "Edit Group" },
+  "Agregar Opción": { en: "Add Option" },
+  "Nombre de Opción": { en: "Option name" },
+  "Precio Extra": { en: "Extra" },
+  "Agregar Empleado": { en: "Add Employee" },
+  "Último Descanso": { en: "Last Break" },
+  "Inicio Descanso": { en: "Break Start" },
+  "Fin Descanso": { en: "Break End" },
+  "No hay registros de horario completados": { en: "No completed time records" },
+  ,"Gestión de Mesas": { en: "Table Layout Management" }
+  ,"Configura el plano y asignación de mesas": { en: "Configure your restaurant's floor plan and table assignments" }
+  ,"Agregar, editar y eliminar mesas": { en: "Add, edit, and remove tables" }
+  ,"Crear y administrar secciones": { en: "Create and manage sections (dining areas)" }
+  ,"Posicionar mesas en el plano": { en: "Position tables visually on the floor plan" }
+  ,"Establecer propiedades de mesa": { en: "Set table properties like capacity and section" }
+  ,"Abrir Editor de Mesas": { en: "Open Table Layout Editor" }
+  ,"Configura tu sistema POS": { en: "Configure your restaurant POS system" }
+  ,"Restaurante": { en: "Restaurant" }
+  ,"Mesas": { en: "Tables" }
+  ,"Pagos": { en: "Payment" }
+  ,"Personal": { en: "Staff" }
+  ,"Notificaciones": { en: "Notifications" }
+  ,"Impresoras": { en: "Printers" }
+  ,"Idioma": { en: "Language" }
+  ,"Sistema": { en: "System" }
 };
 
 interface LanguageProviderProps {

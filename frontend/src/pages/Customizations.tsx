@@ -136,7 +136,7 @@ const Customizations = () => {
           <Plus className="h-4 w-4 mr-1" /> {t("Add Group")}
         </Button>
         {loading ? (
-          <div className="text-center">Loading...</div>
+          <div className="text-center">{t("Cargando...")}</div>
         ) : (
           <div className="space-y-6">
             {groups.map(g => (

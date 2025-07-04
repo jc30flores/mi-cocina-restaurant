@@ -47,8 +47,8 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       
       toast({
-        title: "Clock Out",
-        description: "Employee has been clocked out successfully",
+        title: t("Registro de Salida"),
+        description: t("El empleado ha registrado su salida correctamente"),
       });
     } catch (error) {
       console.error(error);
@@ -69,8 +69,8 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       
       toast({
-        title: "Break Started",
-        description: "Employee has started a break",
+        title: t("Descanso iniciado"),
+        description: t("El empleado ha iniciado su descanso"),
       });
     } catch (error) {
       console.error(error);
@@ -91,8 +91,8 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       
       toast({
-        title: "Break Ended",
-        description: "Employee has ended their break",
+        title: t("Descanso finalizado"),
+        description: t("El empleado ha finalizado su descanso"),
       });
     } catch (error) {
       console.error(error);
@@ -118,20 +118,20 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Active Employees</CardTitle>
-        <CardDescription>Staff currently on shift</CardDescription>
+        <CardTitle>{t("Empleados Activos")}</CardTitle>
+        <CardDescription>{t("Personal actualmente en turno")}</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Position</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Clock In</TableHead>
-              <TableHead>Hours</TableHead>
-              <TableHead>Break Times</TableHead>
-              <TableHead className="text-center">Actions</TableHead>
+              <TableHead>{t("Nombre")}</TableHead>
+              <TableHead>{t("Cargo")}</TableHead>
+              <TableHead>{t("Estado")}</TableHead>
+              <TableHead>{t("Entrada")}</TableHead>
+              <TableHead>{t("Horas")}</TableHead>
+              <TableHead>{t("Descanso")}</TableHead>
+              <TableHead className="text-center">{t("Acción")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -173,7 +173,7 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
                         variant="destructive" 
                         onClick={() => handleClockOut(employee.id)}
                       >
-                        Clock Out
+                        {t("Salida")}
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -213,8 +213,8 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       
       toast({
-        title: "Clock In",
-        description: "Employee has been clocked in successfully",
+        title: t("Registro de Entrada"),
+        description: t("El empleado ha registrado su entrada correctamente"),
       });
     } catch (error) {
       console.error(error);
@@ -229,19 +229,19 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Inactive Employees</CardTitle>
-        <CardDescription>Staff available for shift</CardDescription>
+        <CardTitle>{t("Empleados Inactivos")}</CardTitle>
+        <CardDescription>{t("Personal disponible para turno")}</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Position</TableHead>
-              <TableHead>Last Shift</TableHead>
-              <TableHead>Rate</TableHead>
-              <TableHead>Last Break</TableHead>
-              <TableHead className="text-center">Actions</TableHead>
+              <TableHead>{t("Nombre")}</TableHead>
+              <TableHead>{t("Cargo")}</TableHead>
+              <TableHead>{t("Último Turno")}</TableHead>
+              <TableHead>{t("Tarifa")}</TableHead>
+              <TableHead>{t("Último Descanso")}</TableHead>
+              <TableHead className="text-center">{t("Acción")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -270,11 +270,11 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
-                      <Button 
+                      <Button
                         size="sm"
                         onClick={() => handleClockIn(employee.id)}
                       >
-                        Clock In
+                        {t("Entrada")}
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -307,21 +307,21 @@ const TimeSheet = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Time Tracking</CardTitle>
-        <CardDescription>Summary of hours and tips</CardDescription>
+        <CardTitle>{t("Control Horario")}</CardTitle>
+        <CardDescription>{t("Resumen de horas y propinas")}</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Clock In</TableHead>
-              <TableHead>Clock Out</TableHead>
-              <TableHead>Break Start</TableHead>
-              <TableHead>Break End</TableHead>
-              <TableHead>Hours</TableHead>
-              <TableHead>Total</TableHead>
+              <TableHead>{t("Nombre")}</TableHead>
+              <TableHead>{t("Fecha")}</TableHead>
+              <TableHead>{t("Entrada")}</TableHead>
+              <TableHead>{t("Salida")}</TableHead>
+              <TableHead>{t("Inicio Descanso")}</TableHead>
+              <TableHead>{t("Fin Descanso")}</TableHead>
+              <TableHead>{t("Horas")}</TableHead>
+              <TableHead>{t("Total")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -364,7 +364,7 @@ const TimeSheet = () => {
             ) : (
               <TableRow>
                 <TableCell colSpan={8} className="text-center">
-                  No completed time records
+                  {t("No hay registros de horario completados")}
                 </TableCell>
               </TableRow>
             )}
@@ -392,24 +392,24 @@ const Employees = () => {
     <MainLayout>
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Employee Management</h1>
-          
+          <h1 className="text-3xl font-bold">{t("Gestión de Empleados")}</h1>
+
           <Button onClick={() => setAddEmployeeOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
-            Add Employee
+            {t("Agregar Empleado")}
           </Button>
         </div>
         
         {isLoading ? (
           <div className="flex justify-center items-center h-48">
-            <p>Loading...</p>
+            <p>{t("Cargando...")}</p>
           </div>
         ) : (
           <Tabs defaultValue="active">
             <TabsList className="mb-6">
-              <TabsTrigger value="active">Active</TabsTrigger>
-              <TabsTrigger value="inactive">Inactive</TabsTrigger>
-              <TabsTrigger value="timesheet">Time Tracking</TabsTrigger>
+              <TabsTrigger value="active">{t("Activos")}</TabsTrigger>
+              <TabsTrigger value="inactive">{t("Inactivos")}</TabsTrigger>
+              <TabsTrigger value="timesheet">{t("Control Horario")}</TabsTrigger>
             </TabsList>
             
             <TabsContent value="active">

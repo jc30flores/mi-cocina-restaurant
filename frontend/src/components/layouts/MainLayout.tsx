@@ -50,16 +50,16 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label }) => {
 
 // Navigation items
 const navItems = [
-  { to: "/pos", icon: <ShoppingCart className="h-4 w-4" />, label: "Point of Sale" },
+  { to: "/pos", icon: <ShoppingCart className="h-4 w-4" />, label: "Punto de Venta" },
   { to: "/menu", icon: <ShoppingBag className="h-4 w-4" />, label: "Menú" },
   { to: "/inventory", icon: <LayoutDashboard className="h-4 w-4" />, label: "Inventario" },
-  { to: "/online-orders", icon: <Globe className="h-4 w-4" />, label: "Online Orders" },
+  { to: "/online-orders", icon: <Globe className="h-4 w-4" />, label: "Pedidos en Línea" },
   { to: "/loyalty", icon: <Gift className="h-4 w-4" />, label: "Fidelización" },
   { to: "/employees", icon: <Users className="h-4 w-4" />, label: "Empleados" },
   { to: "/reports", icon: <BarChart3 className="h-4 w-4" />, label: "Reportes" },
-  { to: "/customizations", icon: <SlidersHorizontal className="h-4 w-4" />, label: "Customizations" },
+  { to: "/customizations", icon: <SlidersHorizontal className="h-4 w-4" />, label: "Personalizaciones" },
   { to: "/settings", icon: <Settings className="h-4 w-4" />, label: "Configuración" },
-  { to: "/hardware", icon: <Monitor className="h-4 w-4" />, label: "Hardware" },
+  { to: "/hardware", icon: <Monitor className="h-4 w-4" />, label: "Dispositivos" },
   { to: "/help", icon: <HelpCircle className="h-4 w-4" />, label: "Ayuda" }
 ];
 
