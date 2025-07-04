@@ -399,7 +399,7 @@ export const TableMap: React.FC<TableMapProps> = ({
               ref={(el) => {
                 tableRefs.current[table.id] = el;
               }}
-              className="absolute cursor-pointer"
+              className={`absolute cursor-pointer ${selectedTableId === table.id ? 'ring-2 ring-[#888]' : ''}`}
               style={{
                 left: table.position_x,
                 top: table.position_y,
