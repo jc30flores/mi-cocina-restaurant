@@ -28,7 +28,7 @@ const TableLayoutSection = () => {
         <CardContent>
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">
-              The table layout editor allows you to create and manage your restaurant floor plan. You can:
+              {t("El editor de mesas te permite crear y administrar el plano de tu restaurante. Puedes:")}
             </p>
             <ul className="list-disc list-inside text-sm text-muted-foreground pl-4 space-y-1">
               <li>{t("Agregar, editar y eliminar mesas")}</li>

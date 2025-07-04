@@ -22,6 +22,7 @@ import {
   deleteMapElement
 } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/context/LanguageContext";
 import { TableMap, TableData } from "./TableMap";
 import type { ElementData } from "./TableMap";
 import { Button } from "@/components/ui/button";
@@ -79,6 +80,7 @@ export const TableMapEditor = () => {
   );
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useLanguage();
   
   const [sections, setSections] = useState([] as SectionData[]);
   const [tables, setTables] = useState([] as TableData[]);
@@ -534,16 +536,16 @@ export const TableMapEditor = () => {
       if (itemToDelete.type === 'table') {
         await deleteTable(itemToDelete.id);
         toast({
-          title: "Table Deleted",
-          description: "Table has been removed successfully."
+          title: t("Mesa eliminada"),
+          description: t("La mesa se ha eliminado correctamente.")
         });
         setTables(prev => prev.filter(t => t.id !== itemToDelete.id));
       } else if (itemToDelete.type === 'element') {
         // Delete map element
         await deleteMapElement(itemToDelete.id);
         toast({
-          title: "Shape Deleted",
-          description: "Shape has been removed successfully."
+          title: t("Figura eliminada"),
+          description: t("La figura se ha eliminado correctamente.")
         });
         setElements(prev => prev.filter(e => e.id !== itemToDelete.id));
       } else {
@@ -551,8 +553,8 @@ export const TableMapEditor = () => {
         const hasTables = tables.some(t => t.section_id === itemToDelete.id);
         if (hasTables) {
           toast({
-            title: "Cannot Delete Section",
-            description: "This section contains tables. Move or delete them first.",
+            title: t("No se puede eliminar la sección"),
+            description: t("Esta sección contiene mesas. Muévelas o elimínalas primero."),
             variant: "destructive"
           });
           setShowDeleteConfirmDialog(false);
@@ -560,8 +562,8 @@ export const TableMapEditor = () => {
         }
         await deleteSection(itemToDelete.id);
         toast({
-          title: "Section Deleted",
-          description: "Section has been removed successfully."
+          title: t("Sección eliminada"),
+          description: t("La sección se ha eliminado correctamente.")
         });
         setSections(prev => prev.filter(s => s.id !== itemToDelete.id));
       }
@@ -649,7 +651,7 @@ export const TableMapEditor = () => {
             <Button variant="ghost" size="icon" onClick={() => navigate("/settings")}>
               <ArrowLeft />
             </Button>
-            <h1 className="text-xl font-bold">Table Layout Editor</h1>
+            <h1 className="text-xl font-bold">{t("Editor de Plano de Mesas")}</h1>
           </div>
           <div className="flex items-center gap-2">
             {/* Section Selection Dropdown moved here */}
@@ -661,7 +663,7 @@ export const TableMapEditor = () => {
               }}
             >
               <SelectTrigger className="w-36">
-                <SelectValue placeholder="Select Section" />
+                <SelectValue placeholder={t("Seleccionar Sección")} />
               </SelectTrigger>
               <SelectContent>
                 {sections.map((sec) => (
@@ -675,20 +677,20 @@ export const TableMapEditor = () => {
               variant="outline"
               onClick={() => setShowAddSectionDialog(true)}
             >
-              <Plus size={16} className="mr-2" /> Add Section
-            </Button>
+                <Plus size={16} className="mr-2" /> {t("Agregar Sección")}
+              </Button>
             <Button
               variant="outline"
               onClick={() => setShowAddTableDialog(true)}
             >
-              <Plus size={16} className="mr-2" /> Add Table
-            </Button>
+                <Plus size={16} className="mr-2" /> {t("Agregar Mesa")}
+              </Button>
             <Button
               variant="outline"
               onClick={() => openAddElement('rect')}
             >
-              <RectIcon size={16} className="mr-2" /> Add Element
-            </Button>
+                <RectIcon size={16} className="mr-2" /> {t("Agregar Elemento")}
+              </Button>
           </div>
         </div>
       </div>
@@ -700,22 +702,22 @@ export const TableMapEditor = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
-                <span>Restaurant Sections</span>
+                <span>{t("Secciones del Restaurante")}</span>
               </CardTitle>
-              <CardDescription>Manage dining areas</CardDescription>
+              <CardDescription>{t("Gestiona las áreas de comedor")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               {sections.length === 0 ? (
                 <div className="text-center py-4 text-muted-foreground">
                   <AlertCircle className="mx-auto h-8 w-8 mb-2" />
-                  <p>No sections found</p>
+                  <p>{t("No se encontraron secciones")}</p>
                   <Button 
                     variant="outline" 
                     size="sm" 
                     className="mt-2"
                     onClick={() => setShowAddSectionDialog(true)}
                   >
-                    <Plus size={16} className="mr-1" /> Add Section
+                    <Plus size={16} className="mr-1" /> {t("Agregar Sección")}
                   </Button>
                 </div>
               ) : (
@@ -739,21 +741,21 @@ export const TableMapEditor = () => {
           {/* Tables Card */}
           <Card>
             <CardHeader>
-              <CardTitle>Tables</CardTitle>
-              <CardDescription>All tables in your restaurant</CardDescription>
+              <CardTitle>{t("Mesas del Restaurante")}</CardTitle>
+              <CardDescription>{t("Todas las mesas de tu restaurante")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2 max-h-[400px] overflow-y-auto">
             {filteredTables.length === 0 ? (
                 <div className="text-center py-4 text-muted-foreground">
                   <AlertCircle className="mx-auto h-8 w-8 mb-2" />
-                  <p>No tables found</p>
+                  <p>{t("No se encontraron mesas")}</p>
                   <Button 
                     variant="outline" 
                     size="sm" 
                     className="mt-2"
                     onClick={() => setShowAddTableDialog(true)}
                   >
-                    <Plus size={16} className="mr-1" /> Add Table
+                    <Plus size={16} className="mr-1" /> {t("Agregar Mesa")}
                   </Button>
                 </div>
               ) : (
@@ -762,9 +764,9 @@ export const TableMapEditor = () => {
                   return (
                     <div key={table.id} className="flex items-center justify-between border p-2 rounded-md">
                       <div>
-                        <div className="font-medium">Table {table.number}</div>
+                        <div className="font-medium">{t("Mesa")} {table.number}</div>
                         <div className="text-xs text-muted-foreground">
-                          {section?.name || 'No section'} • {table.capacity} seats
+                          {section?.name || t('Sin sección')} • {table.capacity} seats
                         </div>
                       </div>
                       <div className="flex gap-1">
@@ -791,21 +793,21 @@ export const TableMapEditor = () => {
           {/* Shapes Card */}
           <Card>
             <CardHeader>
-              <CardTitle>Shapes</CardTitle>
-              <CardDescription>All shapes in this map</CardDescription>
+              <CardTitle>{t("Figuras")}</CardTitle>
+              <CardDescription>{t("Todas las figuras en este plano")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2 max-h-[400px] overflow-y-auto">
               {filteredElements.length === 0 ? (
                 <div className="text-center py-4 text-muted-foreground">
                   <AlertCircle className="mx-auto h-8 w-8 mb-2" />
-                  <p>No shapes found</p>
+                  <p>{t("No se encontraron figuras")}</p>
                   <Button
                     variant="outline"
                     size="sm"
                     className="mt-2"
                     onClick={() => openAddElement('rect')}
                   >
-                    <Plus size={16} className="mr-1" /> Add Shape
+                    <Plus size={16} className="mr-1" /> {t("Agregar Figura")}
                   </Button>
                 </div>
               ) : (
@@ -839,8 +841,8 @@ export const TableMapEditor = () => {
         <div className="lg:col-span-3 h-[calc(100vh-12rem)]">
           <Card className="h-full">
             <CardHeader className="pb-2">
-              <CardTitle>Layout Preview</CardTitle>
-              <CardDescription>Drag tables to position them on the map</CardDescription>
+              <CardTitle>{t("Vista Previa del Plano")}</CardTitle>
+              <CardDescription>{t("Arrastra las mesas para posicionarlas en el plano")}</CardDescription>
             </CardHeader>
             <CardContent className="relative h-[calc(100%-5rem)] overflow-x-auto">
               <TableMap
@@ -860,9 +862,9 @@ export const TableMapEditor = () => {
               {/* Save/Cancel buttons for moved tables */}
               {isDirty && (
                 <div className="absolute bottom-4 right-4 flex space-x-2 z-20">
-                  <Button variant="outline" onClick={handleCancelChanges}>Cancel</Button>
+                  <Button variant="outline" onClick={handleCancelChanges}>{t("Cancelar")}</Button>
                   <Button onClick={handleSaveChanges}>
-                    <Save className="mr-2" />Save Changes
+                    <Save className="mr-2" />{t("Guardar Cambios")}
                   </Button>
                 </div>
               )}
@@ -875,16 +877,16 @@ export const TableMapEditor = () => {
       <Dialog open={showAddTableDialog} onOpenChange={setShowAddTableDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add New Table</DialogTitle>
+            <DialogTitle>{t("Nueva Mesa")}</DialogTitle>
             <DialogDescription>
-              Create a new table for your restaurant layout.
+              {t("Crea una nueva mesa para el plano del restaurante.")}
             </DialogDescription>
           </DialogHeader>
           
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="tableNumber">Table Number</Label>
+                <Label htmlFor="tableNumber">{t("Número de Mesa")}</Label>
                 <Input
                   id="tableNumber"
                   placeholder="e.g., 101"
@@ -893,24 +895,24 @@ export const TableMapEditor = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="tableType">Table Type</Label>
+                <Label htmlFor="tableType">{t("Tipo de Mesa")}</Label>
                 <Select
                   value={newTableType}
                   onValueChange={(value) => setNewTableType(value as 'round' | 'square')}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a type" />
+                    <SelectValue placeholder={t("Selecciona un tipo")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="square">Square</SelectItem>
-                    <SelectItem value="round">Round</SelectItem>
+                    <SelectItem value="square">{t("Cuadrada")}</SelectItem>
+                    <SelectItem value="round">{t("Redonda")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="tableWidth">Width (px)</Label>
+                <Label htmlFor="tableWidth">{t("Ancho (px)")}</Label>
                 <Input
                   id="tableWidth"
                   type="number"
@@ -920,7 +922,7 @@ export const TableMapEditor = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="tableHeight">Height (px)</Label>
+                <Label htmlFor="tableHeight">{t("Alto (px)")}</Label>
                 <Input
                   id="tableHeight"
                   type="number"
@@ -932,7 +934,7 @@ export const TableMapEditor = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="tableCapacity">Capacity</Label>
+                <Label htmlFor="tableCapacity">{t("Capacidad")}</Label>
                 <Input
                   id="tableCapacity"
                   type="number"
@@ -942,13 +944,13 @@ export const TableMapEditor = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="tableSection">Section</Label>
+                <Label htmlFor="tableSection">{t("Sección")}</Label>
                 <Select
                   value={newTableSection}
                   onValueChange={setNewTableSection}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a section" />
+                    <SelectValue placeholder={t("Selecciona una sección")} />
                   </SelectTrigger>
                   <SelectContent>
                     {sections.map((section) => (
@@ -962,7 +964,7 @@ export const TableMapEditor = () => {
             </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="tableRotation">Rotation (deg)</Label>
+              <Label htmlFor="tableRotation">{t("Rotación (grados)")}</Label>
               <Input
                 id="tableRotation"
                 type="number"
@@ -972,7 +974,7 @@ export const TableMapEditor = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label>Color</Label>
+              <Label>{t("Color")}</Label>
               <div className="flex flex-wrap gap-2 items-center">
                 {presetColors.map(color => (
                   <button
@@ -997,10 +999,10 @@ export const TableMapEditor = () => {
           
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowAddTableDialog(false)}>
-              Cancel
+              {t("Cancelar")}
             </Button>
             <Button onClick={handleAddTable}>
-              Add Table
+              {t("Agregar Mesa al Plano")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1009,44 +1011,44 @@ export const TableMapEditor = () => {
       <Dialog open={showAddElementDialog} onOpenChange={setShowAddElementDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add New Element</DialogTitle>
+            <DialogTitle>{t("Nuevo Elemento")}</DialogTitle>
             <DialogDescription>
-              Configure the new map element
+              {t("Configura el nuevo elemento del plano")}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="elementType">Type</Label>
+              <Label htmlFor="elementType">{t("Tipo")}</Label>
               <Select value={newElementType} onValueChange={(v) => setNewElementType(v as any)}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select type" />
+                  <SelectValue placeholder={t("Selecciona tipo")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="rect">Rectangle</SelectItem>
-                  <SelectItem value="circle">Circle</SelectItem>
-                  <SelectItem value="line">Line</SelectItem>
-                  <SelectItem value="text">Text</SelectItem>
+                  <SelectItem value="rect">{t("Rectángulo")}</SelectItem>
+                  <SelectItem value="circle">{t("Círculo")}</SelectItem>
+                  <SelectItem value="line">{t("Línea")}</SelectItem>
+                  <SelectItem value="text">{t("Texto")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="elementWidth">Width (px)</Label>
+                <Label htmlFor="elementWidth">{t("Ancho (px)")}</Label>
                 <Input id="elementWidth" type="number" min="1" value={newElementWidth} onChange={(e) => setNewElementWidth(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="elementHeight">Height (px)</Label>
+                <Label htmlFor="elementHeight">{t("Alto (px)")}</Label>
                 <Input id="elementHeight" type="number" min="1" value={newElementHeight} onChange={(e) => setNewElementHeight(e.target.value)} />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="elementColor">Color</Label>
+              <Label htmlFor="elementColor">{t("Color")}</Label>
               <Input id="elementColor" type="color" value={newElementColor} onChange={(e) => setNewElementColor(e.target.value)} />
             </div>
             {newElementType === 'text' && (
               <>
                 <div className="space-y-2">
-                  <Label htmlFor="elementContent">Text</Label>
+                  <Label htmlFor="elementContent">{t("Texto")}</Label>
                   <Input
                     id="elementContent"
                     value={newElementContent}
@@ -1054,7 +1056,7 @@ export const TableMapEditor = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="elementRotation">Rotation (deg)</Label>
+                  <Label htmlFor="elementRotation">{t("Rotación (grados)")}</Label>
                   <Input
                     id="elementRotation"
                     type="number"
@@ -1066,8 +1068,8 @@ export const TableMapEditor = () => {
             )}
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowAddElementDialog(false)}>Cancel</Button>
-            <Button onClick={handleCreateElement}>Add Element</Button>
+            <Button variant="outline" onClick={() => setShowAddElementDialog(false)}>{t("Cancelar")}</Button>
+            <Button onClick={handleCreateElement}>{t("Agregar Elemento al Plano")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1076,9 +1078,9 @@ export const TableMapEditor = () => {
       <Dialog open={showEditTableDialog} onOpenChange={setShowEditTableDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Table</DialogTitle>
+            <DialogTitle>{t("Editar Mesa")}</DialogTitle>
             <DialogDescription>
-              Update table information.
+              {t("Actualiza la información de la mesa.")}
             </DialogDescription>
           </DialogHeader>
           
@@ -1086,7 +1088,7 @@ export const TableMapEditor = () => {
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="editTableNumber">Table Number</Label>
+                  <Label htmlFor="editTableNumber">{t("Número de Mesa")}</Label>
                   <Input
                     id="editTableNumber"
                     value={selectedTable.number}
@@ -1094,24 +1096,24 @@ export const TableMapEditor = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="editTableType">Table Type</Label>
+                  <Label htmlFor="editTableType">{t("Tipo de Mesa")}</Label>
                   <Select
                     value={selectedTable.shape || 'square'}
                     onValueChange={(value) => setSelectedTable({ ...selectedTable, shape: value as 'round' | 'square' })}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a type" />
+                      <SelectValue placeholder={t("Selecciona un tipo")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="square">Square</SelectItem>
-                      <SelectItem value="round">Round</SelectItem>
+                      <SelectItem value="square">{t("Cuadrada")}</SelectItem>
+                      <SelectItem value="round">{t("Redonda")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="editTableWidth">Width (px)</Label>
+                  <Label htmlFor="editTableWidth">{t("Ancho (px)")}</Label>
                   <Input
                     id="editTableWidth"
                     type="number"
@@ -1121,7 +1123,7 @@ export const TableMapEditor = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="editTableHeight">Height (px)</Label>
+                  <Label htmlFor="editTableHeight">{t("Alto (px)")}</Label>
                   <Input
                     id="editTableHeight"
                     type="number"
@@ -1133,7 +1135,7 @@ export const TableMapEditor = () => {
               </div>
               {/* Capacity for table */}
               <div className="space-y-2">
-                <Label htmlFor="editTableCapacity">Capacity</Label>
+                <Label htmlFor="editTableCapacity">{t("Capacidad")}</Label>
                 <Input
                   id="editTableCapacity"
                   type="number"
@@ -1143,13 +1145,13 @@ export const TableMapEditor = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="editSection">Section</Label>
+                <Label htmlFor="editSection">{t("Sección")}</Label>
                 <Select
                   value={selectedTable.section_id || ""}
                   onValueChange={(value) => setSelectedTable({ ...selectedTable, section_id: value })}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a section" />
+                    <SelectValue placeholder={t("Selecciona una sección")} />
                   </SelectTrigger>
                   <SelectContent>
                     {sections.map((section) => (
@@ -1163,7 +1165,7 @@ export const TableMapEditor = () => {
             {/* Rotation and Color for table */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="editTableRotation">Rotation (deg)</Label>
+                <Label htmlFor="editTableRotation">{t("Rotación (grados)")}</Label>
                 <Input
                   id="editTableRotation"
                   type="number"
@@ -1173,7 +1175,7 @@ export const TableMapEditor = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Color</Label>
+                <Label>{t("Color")}</Label>
                 <div className="flex flex-wrap gap-2 items-center">
                   {presetColors.map(color => (
                     <button
@@ -1199,7 +1201,7 @@ export const TableMapEditor = () => {
           
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowEditTableDialog(false)}>
-              Cancel
+              {t("Cancelar")}
             </Button>
             <Button variant="destructive" onClick={() => {
               if (selectedTable) {
@@ -1207,10 +1209,10 @@ export const TableMapEditor = () => {
                 setShowEditTableDialog(false);
               }
             }}>
-              Delete
+              {t("Eliminar")}
             </Button>
             <Button onClick={handleUpdateTable}>
-              Save Changes
+              {t("Guardar Cambios")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1220,15 +1222,15 @@ export const TableMapEditor = () => {
       <Dialog open={showAddSectionDialog} onOpenChange={setShowAddSectionDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add New Section</DialogTitle>
+            <DialogTitle>{t("Nueva Sección")}</DialogTitle>
             <DialogDescription>
-              Create a new dining area for your restaurant.
+              {t("Crear una nueva área de comedor para tu restaurante.")}
             </DialogDescription>
           </DialogHeader>
           
           <div className="grid gap-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="sectionName">Section Name</Label>
+              <Label htmlFor="sectionName">{t("Nombre de la Sección")}</Label>
               <Input
                 id="sectionName"
                 placeholder="e.g., Outdoor Patio"
@@ -1240,10 +1242,10 @@ export const TableMapEditor = () => {
           
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowAddSectionDialog(false)}>
-              Cancel
+              {t("Cancelar")}
             </Button>
             <Button onClick={handleAddSection}>
-              Add Section
+              {t("Agregar Sección")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1253,16 +1255,16 @@ export const TableMapEditor = () => {
       <Dialog open={showEditSectionDialog} onOpenChange={setShowEditSectionDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Section</DialogTitle>
+            <DialogTitle>{t("Editar Sección")}</DialogTitle>
             <DialogDescription>
-              Update section information.
+              {t("Actualiza la información de la sección.")}
             </DialogDescription>
           </DialogHeader>
           
           {selectedSection && (
             <div className="grid gap-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="editSectionName">Section Name</Label>
+                <Label htmlFor="editSectionName">{t("Nombre de la Sección")}</Label>
                 <Input
                   id="editSectionName"
                   value={selectedSection.name}
@@ -1274,7 +1276,7 @@ export const TableMapEditor = () => {
           
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowEditSectionDialog(false)}>
-              Cancel
+              {t("Cancelar")}
             </Button>
             <Button variant="destructive" onClick={() => {
               if (selectedSection) {
@@ -1282,10 +1284,10 @@ export const TableMapEditor = () => {
                 setShowEditSectionDialog(false);
               }
             }}>
-              Delete
+              {t("Eliminar")}
             </Button>
             <Button onClick={handleEditSection}>
-              Save Changes
+              {t("Guardar Cambios")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1295,20 +1297,20 @@ export const TableMapEditor = () => {
       <Dialog open={showEditElementDialog} onOpenChange={setShowEditElementDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Shape</DialogTitle>
-            <DialogDescription>Update shape properties.</DialogDescription>
+            <DialogTitle>{t("Editar Figura")}</DialogTitle>
+            <DialogDescription>{t("Actualiza las propiedades de la figura.")}</DialogDescription>
           </DialogHeader>
           {selectedElement && (
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-1 gap-4">
                 <div className="space-y-2">
-                  <Label>Type</Label>
+                  <Label>{t("Tipo")}</Label>
                   <Input value={selectedElement.type} disabled />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Width (px)</Label>
+                  <Label>{t("Ancho (px)")}</Label>
                   <Input
                     type="number"
                     value={selectedElement.width}
@@ -1319,7 +1321,7 @@ export const TableMapEditor = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Height (px)</Label>
+                  <Label>{t("Alto (px)")}</Label>
                   <Input
                     type="number"
                     value={selectedElement.height}
@@ -1333,7 +1335,7 @@ export const TableMapEditor = () => {
               {selectedElement.type === 'text' && (
                 <>
                   <div className="space-y-2">
-                    <Label>Content</Label>
+                    <Label>{t("Texto")}</Label>
                     <Input
                       value={selectedElement.content || ''}
                       onChange={(e) => setSelectedElement({
@@ -1343,7 +1345,7 @@ export const TableMapEditor = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Rotation (deg)</Label>
+                    <Label>{t("Rotación (grados)")}</Label>
                     <Input
                       type="number"
                       value={selectedElement.rotation || 0}
@@ -1356,7 +1358,7 @@ export const TableMapEditor = () => {
                 </>
               )}
               <div className="space-y-2">
-                <Label>Color</Label>
+                <Label>{t("Color")}</Label>
                 <Input
                   type="color"
                   value={selectedElement.color || '#000000'}
@@ -1370,7 +1372,7 @@ export const TableMapEditor = () => {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowEditElementDialog(false)}>
-              Cancel
+              {t("Cancelar")}
             </Button>
             <Button variant="destructive" onClick={() => {
               if (selectedElement) {
@@ -1378,10 +1380,10 @@ export const TableMapEditor = () => {
                 setShowEditElementDialog(false);
               }
             }}>
-              Delete
+              {t("Eliminar")}
             </Button>
             <Button onClick={handleUpdateElement}>
-              Save Changes
+              {t("Guardar Cambios")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1390,11 +1392,11 @@ export const TableMapEditor = () => {
       <Dialog open={showAddPresetColorDialog} onOpenChange={setShowAddPresetColorDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add Table Color</DialogTitle>
+            <DialogTitle>{t("Agregar Color de Mesa")}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="space-y-2">
-              <Label>Select New Color</Label>
+              <Label>{t("Selecciona un nuevo color")}</Label>
               <Input
                 type="color"
                 value={newPresetColor}
@@ -1404,13 +1406,13 @@ export const TableMapEditor = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowAddPresetColorDialog(false)}>
-              Cancel
+              {t("Cancelar")}
             </Button>
             <Button onClick={() => {
               setPresetColors(prev => [...prev, newPresetColor]);
               setShowAddPresetColorDialog(false);
             }}>
-              Add Color
+              {t("Agregar Color")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1419,18 +1421,18 @@ export const TableMapEditor = () => {
       <Dialog open={showDeleteConfirmDialog} onOpenChange={setShowDeleteConfirmDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
+            <DialogTitle>{t("Confirmar Eliminación")}</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete this {itemToDelete.type}? This action cannot be undone.
+              {t("¿Estás seguro de que deseas eliminar este elemento? Esta acción no se puede deshacer.")}
             </DialogDescription>
           </DialogHeader>
           
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowDeleteConfirmDialog(false)}>
-              Cancel
+              {t("Cancelar")}
             </Button>
             <Button variant="destructive" onClick={handleDelete}>
-              Delete
+              {t("Eliminar")}
             </Button>
           </DialogFooter>
         </DialogContent>
