@@ -1,14 +1,15 @@
 
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { 
-  ShoppingCart, 
-  ShoppingBag, 
-  LayoutDashboard, 
+import {
+  ShoppingCart,
+  ShoppingBag,
+  LayoutDashboard,
   Users,
   BarChart3,
   Settings,
-  SlidersHorizontal
+  SlidersHorizontal,
+  LogOut
 } from "lucide-react";
 import ThemeToggle from "../ui/ThemeToggle";
 import { Button } from "@/components/ui/button";
@@ -103,8 +104,13 @@ const MainLayout = ({ children, noPadding = false, fullWidth = false, hideNav = 
           {/* Theme Toggle and Log Out */}
           <div className="flex-shrink-0 ml-2 flex items-center gap-2">
             <ThemeToggle />
-            <Button variant="outline" size="sm" onClick={logout}>
-              {t("Log Out")}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={logout}
+              aria-label={t("Cerrar sesión")}
+            >
+              <LogOut className="h-4 w-4" />
             </Button>
           </div>
         </div>
