@@ -19,29 +19,29 @@ const Login = () => {
 
   const handleSubmit = async () => {
     if (!code) {
-      toast({ title: "Ingresa el código", description: "Por favor ingresa un código de acceso.", variant: "destructive" });
+      toast({ title: "Enter code", description: "Please enter an access code.", variant: "destructive" });
       return;
     }
     try {
       const employees = await getEmployees();
       const emp = employees.find((e: any) => e.access_code === code);
       if (emp) {
-        toast({ title: `Bienvenido, ${emp.name}` });
+        toast({ title: `Welcome, ${emp.name}` });
         login(emp);
         navigate("/pos");
       } else {
-        toast({ title: "Código inválido", description: "Código de acceso no reconocido.", variant: "destructive" });
+        toast({ title: "Invalid Code", description: "Access code not recognized.", variant: "destructive" });
         setCode("");
       }
     } catch (error) {
       console.error(error);
-      toast({ title: "Error", description: "No se pudo validar el código.", variant: "destructive" });
+      toast({ title: "Error", description: "Failed to validate code.", variant: "destructive" });
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-background">
-      <h1 className="text-2xl font-bold mb-4">Ingresa tu código de acceso</h1>
+      <h1 className="text-2xl font-bold mb-4">Enter Access Code</h1>
       <div className="mb-4 text-3xl tracking-widest">{code || ' '}</div>
       <div className="grid grid-cols-3 gap-2">
         {[...'123456789'].map((d) => (
@@ -51,7 +51,7 @@ const Login = () => {
         <Button onClick={() => handleDigit('0')}>0</Button>
         <Button onClick={handleBackspace}>&lArr;</Button>
       </div>
-      <Button className="mt-6 w-1/2" onClick={handleSubmit}>Ingresar</Button>
+      <Button className="mt-6 w-1/2" onClick={handleSubmit}>Enter</Button>
     </div>
   );
 };

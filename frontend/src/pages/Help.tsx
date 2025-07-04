@@ -13,8 +13,8 @@ const FAQ = () => {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <Input
-          placeholder="Buscar en preguntas frecuentes..."
+        <Input 
+          placeholder="Search in frequently asked questions..." 
           className="max-w-md"
         />
       </div>
@@ -22,55 +22,55 @@ const FAQ = () => {
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger>
-            ¿Cómo agrego un nuevo producto al menú?
+            How do I add a new product to the menu?
           </AccordionTrigger>
           <AccordionContent>
-            Para agregar un nuevo producto, ve a la sección "Menú del Restaurante",
-            haz clic en el botón "Agregar Producto", completa la información requerida
-            y guarda los cambios. El nuevo producto estará disponible de inmediato en el POS.
+            To add a new product, go to the "Restaurant Menu" section, 
+            click on the "Add Product" button, complete the required details 
+            and save the changes. The new product will be available immediately in the POS.
           </AccordionContent>
         </AccordionItem>
         
         <AccordionItem value="item-2">
           <AccordionTrigger>
-            ¿Cómo puedo dividir una cuenta entre varios clientes?
+            How can I split a bill between multiple customers?
           </AccordionTrigger>
           <AccordionContent>
-            En la pantalla del POS selecciona la orden que deseas dividir,
-            luego haz clic en el botón "Pagar" y elige la opción "Dividir Cuenta".
-            Puedes dividirla en partes iguales, por artículo o de forma personalizada.
+            On the POS screen, select the order you want to split, 
+            then click on the "Pay" button and select the "Split Bill" option. 
+            You can choose to split equally, by item, or custom.
           </AccordionContent>
         </AccordionItem>
         
         <AccordionItem value="item-3">
           <AccordionTrigger>
-            ¿Cómo configuro los impuestos para diferentes productos?
+            How do I configure taxes for different products?
           </AccordionTrigger>
           <AccordionContent>
-            Ve a "Configuración", selecciona "General" y busca la sección "Impuestos".
-            Puedes establecer tasas globales o específicas por categoría de producto.
+            Go to "Settings", select "General" and find the "Taxes" section. 
+            You can set up global tax rates or specific rates by product category.
           </AccordionContent>
         </AccordionItem>
         
         <AccordionItem value="item-4">
           <AccordionTrigger>
-            ¿Cómo puedo ver reportes de ventas de un periodo específico?
+            How can I view sales reports for a specific period?
           </AccordionTrigger>
           <AccordionContent>
-            Dirígete a la sección "Reportes e Insights", selecciona "Ingresos" y
-            usa los filtros de fecha para elegir el periodo deseado.
-            Puedes exportar los reportes en formato Excel o PDF.
+            Go to the "Reports & Insights" section, select "Revenue" and 
+            use the date filters to select the desired period. 
+            You can export the reports in Excel or PDF format.
           </AccordionContent>
         </AccordionItem>
         
         <AccordionItem value="item-5">
           <AccordionTrigger>
-            ¿Cómo registro la entrada y salida de los empleados?
+            How do I record employee clock in and out?
           </AccordionTrigger>
           <AccordionContent>
-            Ve a la sección "Gestión de Empleados", localiza al empleado en la lista
-            y utiliza los botones "Entrada" o "Salida" según corresponda. También puedes
-            registrar periodos de descanso.
+            Go to the "Employee Management" section, find the employee in the list 
+            and use the "Clock In" or "Clock Out" buttons as appropriate. You can also 
+            record break periods.
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -83,8 +83,8 @@ const Tutorials = () => {
   
   const handleWatchVideo = (title: string) => {
     toast({
-      title: "Reproduciendo tutorial",
-      description: `"${title}" se abrirá en una nueva ventana`,
+      title: "Playing tutorial",
+      description: `"${title}" will open in a new window`,
     });
   };
 
@@ -93,84 +93,84 @@ const Tutorials = () => {
       <Card className="overflow-hidden">
         <div className="aspect-video bg-muted relative">
           <div className="absolute inset-0 flex items-center justify-center">
-            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Introducción al POS")}>
-              Ver Video
+            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Introduction to POS")}>
+              Watch Video
             </Button>
           </div>
         </div>
         <CardHeader className="py-3">
-          <CardTitle className="text-lg">Introducción al POS</CardTitle>
-          <CardDescription>Aprende lo básico en 5 minutos</CardDescription>
+          <CardTitle className="text-lg">Introduction to POS</CardTitle>
+          <CardDescription>Learn the basics in 5 minutes</CardDescription>
         </CardHeader>
       </Card>
       
       <Card className="overflow-hidden">
         <div className="aspect-video bg-muted relative">
           <div className="absolute inset-0 flex items-center justify-center">
-            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Gestión de Ordenes")}>
-              Ver Video
+            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Order Management")}>
+              Watch Video
             </Button>
           </div>
         </div>
         <CardHeader className="py-3">
-          <CardTitle className="text-lg">Gestión de Órdenes</CardTitle>
-          <CardDescription>Crea, modifica y procesa órdenes</CardDescription>
+          <CardTitle className="text-lg">Order Management</CardTitle>
+          <CardDescription>Create, modify and process orders</CardDescription>
         </CardHeader>
       </Card>
       
       <Card className="overflow-hidden">
         <div className="aspect-video bg-muted relative">
           <div className="absolute inset-0 flex items-center justify-center">
-            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Reportes Avanzados")}> 
-              Ver Video
+            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Advanced Reports")}>
+              Watch Video
             </Button>
           </div>
         </div>
         <CardHeader className="py-3">
-          <CardTitle className="text-lg">Reportes Avanzados</CardTitle>
-          <CardDescription>Análisis de datos y métricas clave</CardDescription>
+          <CardTitle className="text-lg">Advanced Reports</CardTitle>
+          <CardDescription>Data analysis and key metrics</CardDescription>
         </CardHeader>
       </Card>
       
       <Card className="overflow-hidden">
         <div className="aspect-video bg-muted relative">
           <div className="absolute inset-0 flex items-center justify-center">
-            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Gestión de Inventario")}>
-              Ver Video
+            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Inventory Management")}>
+              Watch Video
             </Button>
           </div>
         </div>
         <CardHeader className="py-3">
-          <CardTitle className="text-lg">Gestión de Inventario</CardTitle>
-          <CardDescription>Control de stock y alertas</CardDescription>
+          <CardTitle className="text-lg">Inventory Management</CardTitle>
+          <CardDescription>Stock control and alerts</CardDescription>
         </CardHeader>
       </Card>
       
       <Card className="overflow-hidden">
         <div className="aspect-video bg-muted relative">
           <div className="absolute inset-0 flex items-center justify-center">
-            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Programa de Lealtad")}>
-              Ver Video
+            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Loyalty Program")}>
+              Watch Video
             </Button>
           </div>
         </div>
         <CardHeader className="py-3">
-          <CardTitle className="text-lg">Programa de Lealtad</CardTitle>
-          <CardDescription>Configuración de puntos y recompensas</CardDescription>
+          <CardTitle className="text-lg">Loyalty Program</CardTitle>
+          <CardDescription>Points and rewards configuration</CardDescription>
         </CardHeader>
       </Card>
       
       <Card className="overflow-hidden">
         <div className="aspect-video bg-muted relative">
           <div className="absolute inset-0 flex items-center justify-center">
-            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("Integraciones Externas")}>
-              Ver Video
+            <Button variant="outline" className="bg-background/80 backdrop-blur-sm" onClick={() => handleWatchVideo("External Integrations")}>
+              Watch Video
             </Button>
           </div>
         </div>
         <CardHeader className="py-3">
-          <CardTitle className="text-lg">Integraciones Externas</CardTitle>
-          <CardDescription>Conecta con servicios de terceros</CardDescription>
+          <CardTitle className="text-lg">External Integrations</CardTitle>
+          <CardDescription>Connect with third-party services</CardDescription>
         </CardHeader>
       </Card>
     </div>
@@ -183,8 +183,8 @@ const Support = () => {
   const handleSendRequest = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Solicitud enviada",
-      description: "Nuestro equipo de soporte responderá pronto",
+      title: "Request sent",
+      description: "Our support team will respond shortly",
     });
   };
 
@@ -192,51 +192,51 @@ const Support = () => {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Centro de Soporte 24/7</CardTitle>
+          <CardTitle>24/7 Support Center</CardTitle>
           <CardDescription>
-            Nuestro equipo está disponible para ayudarte en cualquier momento
+            Our team is available to help you anytime
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="border rounded-lg p-4 text-center">
-              <h3 className="font-medium mb-2">Teléfono</h3>
+              <h3 className="font-medium mb-2">Phone</h3>
               <p className="text-lg">+1 (800) 123-4567</p>
-              <p className="text-sm text-muted-foreground">Disponible 24/7</p>
+              <p className="text-sm text-muted-foreground">Available 24/7</p>
             </div>
             
             <div className="border rounded-lg p-4 text-center">
               <h3 className="font-medium mb-2">Email</h3>
               <p className="text-lg">support@pos.com</p>
-              <p className="text-sm text-muted-foreground">Respuesta en 2 horas</p>
+              <p className="text-sm text-muted-foreground">Response within 2 hours</p>
             </div>
             
             <div className="border rounded-lg p-4 text-center">
-              <h3 className="font-medium mb-2">Chat en Vivo</h3>
+              <h3 className="font-medium mb-2">Live Chat</h3>
               <Button 
                 variant="outline" 
                 className="mt-2"
                 onClick={() => toast({
-                  title: "Iniciando chat",
-                  description: "Conectando con un agente de soporte...",
+                  title: "Starting chat",
+                  description: "Connecting with a support agent...",
                 })}
               >
-                Iniciar Chat
+                Start Chat
               </Button>
             </div>
           </div>
           
           <div>
-            <h3 className="font-medium mb-4">Enviar Solicitud de Soporte</h3>
+            <h3 className="font-medium mb-4">Send Support Request</h3>
             <form onSubmit={handleSendRequest} className="space-y-4">
               <div>
-                <Input placeholder="Asunto" className="mb-2" />
+                <Input placeholder="Subject" className="mb-2" />
                 <textarea 
                   className="w-full min-h-[150px] p-3 border rounded-md" 
-                  placeholder="Describe tu problema con detalle..."
+                  placeholder="Describe your problem in detail..."
                 />
               </div>
-              <Button type="submit">Enviar Solicitud</Button>
+              <Button type="submit">Send Request</Button>
             </form>
           </div>
         </CardContent>
@@ -249,9 +249,9 @@ const Updates = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Actualizaciones Recientes</CardTitle>
+        <CardTitle>Recent Updates</CardTitle>
         <CardDescription>
-          Mantente al día con las últimas actualizaciones y mejoras
+          Stay up to date with the latest updates and improvements
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -261,12 +261,12 @@ const Updates = () => {
               <h3 className="font-medium text-lg">Version 2.5.3</h3>
               <Badge>New</Badge>
             </div>
-            <p className="text-sm text-muted-foreground mb-2">Lanzamiento: 28 de abril de 2025</p>
+            <p className="text-sm text-muted-foreground mb-2">Released: April 28, 2025</p>
             <ul className="list-disc list-inside space-y-1 text-sm">
-              <li>Mejoras a la interfaz del POS para mayor rapidez</li>
-              <li>Corrección de errores en el módulo de reportes</li>
-              <li>Nueva función de propina automática para grupos</li>
-              <li>Mejoras generales de rendimiento</li>
+              <li>Improvements to POS interface for better speed</li>
+              <li>Bug fixes in the reports module</li>
+              <li>New automatic gratuity function for groups</li>
+              <li>General performance improvements</li>
             </ul>
           </div>
           
@@ -274,12 +274,12 @@ const Updates = () => {
             <div className="flex items-center justify-between mb-2">
               <h3 className="font-medium text-lg">Version 2.5.1</h3>
             </div>
-            <p className="text-sm text-muted-foreground mb-2">Lanzamiento: 15 de abril de 2025</p>
+            <p className="text-sm text-muted-foreground mb-2">Released: April 15, 2025</p>
             <ul className="list-disc list-inside space-y-1 text-sm">
-              <li>Integración con nuevos proveedores de pago</li>
-              <li>Mejoras al sistema de fidelización de clientes</li>
-              <li>Optimización del módulo de inventario</li>
-              <li>Nuevas opciones de personalización de recibos</li>
+              <li>Integration with new payment providers</li>
+              <li>Improvements to customer loyalty system</li>
+              <li>Inventory module optimization</li>
+              <li>New receipt customization options</li>
             </ul>
           </div>
           
@@ -287,12 +287,12 @@ const Updates = () => {
             <div className="flex items-center justify-between mb-2">
               <h3 className="font-medium text-lg">Version 2.4.8</h3>
             </div>
-            <p className="text-sm text-muted-foreground mb-2">Lanzamiento: 1 de abril de 2025</p>
+            <p className="text-sm text-muted-foreground mb-2">Released: April 1, 2025</p>
             <ul className="list-disc list-inside space-y-1 text-sm">
-              <li>Nueva función mejorada de división de cuentas</li>
-              <li>Soporte para múltiples idiomas</li>
-              <li>Corrección de errores en pedidos en línea</li>
-              <li>Mejoras en la seguridad del sistema</li>
+              <li>New improved bill splitting function</li>
+              <li>Support for multiple languages</li>
+              <li>Bug fixes in online orders</li>
+              <li>System security improvements</li>
             </ul>
           </div>
         </div>
@@ -305,14 +305,14 @@ const Help = () => {
   return (
     <MainLayout>
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Centro de Ayuda y Soporte</h1>
+        <h1 className="text-3xl font-bold mb-6">Help and Support Center</h1>
         
         <Tabs defaultValue="faq">
           <TabsList className="mb-6">
-            <TabsTrigger value="faq">Preguntas Frecuentes</TabsTrigger>
-            <TabsTrigger value="tutorials">Tutoriales</TabsTrigger>
-            <TabsTrigger value="support">Soporte Técnico</TabsTrigger>
-            <TabsTrigger value="updates">Actualizaciones</TabsTrigger>
+            <TabsTrigger value="faq">Frequently Asked Questions</TabsTrigger>
+            <TabsTrigger value="tutorials">Tutorials</TabsTrigger>
+            <TabsTrigger value="support">Technical Support</TabsTrigger>
+            <TabsTrigger value="updates">Updates</TabsTrigger>
           </TabsList>
           
           <TabsContent value="faq">

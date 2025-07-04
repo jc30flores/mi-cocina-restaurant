@@ -50,14 +50,14 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label }) => {
 
 // Navigation items
 const navItems = [
-  { to: "/pos", icon: <ShoppingCart className="h-4 w-4" />, label: "Punto de Venta" },
+  { to: "/pos", icon: <ShoppingCart className="h-4 w-4" />, label: "POS" },
   { to: "/menu", icon: <ShoppingBag className="h-4 w-4" />, label: "Menú" },
   { to: "/inventory", icon: <LayoutDashboard className="h-4 w-4" />, label: "Inventario" },
-  { to: "/online-orders", icon: <Globe className="h-4 w-4" />, label: "Pedidos en Línea" },
+  { to: "/online-orders", icon: <Globe className="h-4 w-4" />, label: "Online Orders" },
   { to: "/loyalty", icon: <Gift className="h-4 w-4" />, label: "Fidelización" },
   { to: "/employees", icon: <Users className="h-4 w-4" />, label: "Empleados" },
   { to: "/reports", icon: <BarChart3 className="h-4 w-4" />, label: "Reportes" },
-  { to: "/customizations", icon: <SlidersHorizontal className="h-4 w-4" />, label: "Personalizaciones" },
+  { to: "/customizations", icon: <SlidersHorizontal className="h-4 w-4" />, label: "Customizations" },
   { to: "/settings", icon: <Settings className="h-4 w-4" />, label: "Configuración" },
   { to: "/hardware", icon: <Monitor className="h-4 w-4" />, label: "Hardware" },
   { to: "/help", icon: <HelpCircle className="h-4 w-4" />, label: "Ayuda" }
@@ -108,11 +108,11 @@ const MainLayout = ({ children, noPadding = false, fullWidth = false, hideNav = 
             </nav>
           </div>
 
-          {/* Tema oscuro y cierre de sesión */}
+          {/* Theme Toggle and Log Out */}
           <div className="flex-shrink-0 ml-2 flex items-center gap-2">
             <ThemeToggle />
             <Button variant="outline" size="sm" onClick={logout}>
-              Cerrar sesión
+              Log Out
             </Button>
           </div>
         </div>

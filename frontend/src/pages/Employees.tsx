@@ -118,20 +118,20 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Empleados Activos</CardTitle>
-        <CardDescription>Personal actualmente en turno</CardDescription>
+        <CardTitle>Active Employees</CardTitle>
+        <CardDescription>Staff currently on shift</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Nombre</TableHead>
-              <TableHead>Puesto</TableHead>
-              <TableHead>Estado</TableHead>
-              <TableHead>Entrada</TableHead>
-              <TableHead>Horas</TableHead>
-              <TableHead>Descansos</TableHead>
-              <TableHead className="text-center">Acciones</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Position</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Clock In</TableHead>
+              <TableHead>Hours</TableHead>
+              <TableHead>Break Times</TableHead>
+              <TableHead className="text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -182,7 +182,7 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={7} className="text-center">
-                  No hay empleados activos en este momento
+                  No active employees at this time
                 </TableCell>
               </TableRow>
             )}
@@ -229,19 +229,19 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Empleados Inactivos</CardTitle>
-        <CardDescription>Personal disponible para turno</CardDescription>
+        <CardTitle>Inactive Employees</CardTitle>
+        <CardDescription>Staff available for shift</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Nombre</TableHead>
-              <TableHead>Puesto</TableHead>
-              <TableHead>Último Turno</TableHead>
-              <TableHead>Tarifa</TableHead>
-              <TableHead>Último Descanso</TableHead>
-              <TableHead className="text-center">Acciones</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Position</TableHead>
+              <TableHead>Last Shift</TableHead>
+              <TableHead>Rate</TableHead>
+              <TableHead>Last Break</TableHead>
+              <TableHead className="text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -283,7 +283,7 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={6} className="text-center">
-                  No hay empleados inactivos en este momento
+                  No inactive employees at this time
                 </TableCell>
               </TableRow>
             )}
@@ -307,20 +307,20 @@ const TimeSheet = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Control de Horas</CardTitle>
-        <CardDescription>Resumen de horas y propinas</CardDescription>
+        <CardTitle>Time Tracking</CardTitle>
+        <CardDescription>Summary of hours and tips</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Nombre</TableHead>
-              <TableHead>Fecha</TableHead>
-              <TableHead>Entrada</TableHead>
-              <TableHead>Salida</TableHead>
-              <TableHead>Inicio Descanso</TableHead>
-              <TableHead>Fin Descanso</TableHead>
-              <TableHead>Horas</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Clock In</TableHead>
+              <TableHead>Clock Out</TableHead>
+              <TableHead>Break Start</TableHead>
+              <TableHead>Break End</TableHead>
+              <TableHead>Hours</TableHead>
               <TableHead>Total</TableHead>
             </TableRow>
           </TableHeader>
@@ -392,11 +392,11 @@ const Employees = () => {
     <MainLayout>
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Gestión de Empleados</h1>
+          <h1 className="text-3xl font-bold">Employee Management</h1>
           
           <Button onClick={() => setAddEmployeeOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
-            Agregar Empleado
+            Add Employee
           </Button>
         </div>
         
@@ -407,9 +407,9 @@ const Employees = () => {
         ) : (
           <Tabs defaultValue="active">
             <TabsList className="mb-6">
-              <TabsTrigger value="active">Activos</TabsTrigger>
-              <TabsTrigger value="inactive">Inactivos</TabsTrigger>
-              <TabsTrigger value="timesheet">Control de Horas</TabsTrigger>
+              <TabsTrigger value="active">Active</TabsTrigger>
+              <TabsTrigger value="inactive">Inactive</TabsTrigger>
+              <TabsTrigger value="timesheet">Time Tracking</TabsTrigger>
             </TabsList>
             
             <TabsContent value="active">
