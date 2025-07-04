@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-type Language = "en";
+type Language = "en" | "es";
 
 type TranslationEntry = {
   en: string;
@@ -22,6 +22,7 @@ const translations: TranslationDictionary = {
   "Inventario": { en: "Inventory" },
   "Fidelización": { en: "Loyalty" },
   "Reportes": { en: "Reports" },
+  "Personalizaciones": { en: "Customizations" },
   "Ayuda": { en: "Help" },
   "Configuración": { en: "Settings" },
   "Dispositivos": { en: "Hardware" },
@@ -36,11 +37,67 @@ const translations: TranslationDictionary = {
   "Filtrar": { en: "Filter" },
   "Detalles": { en: "Details" },
   "Cerrar": { en: "Close" },
+  "Cerrar sesión": { en: "Log Out" },
   "Aceptar": { en: "Accept" },
   "Rechazar": { en: "Reject" },
   "Siguiente": { en: "Next" },
   "Anterior": { en: "Previous" },
   "Volver": { en: "Back" },
+  "Ingresa el código": { en: "Enter code" },
+  "Por favor ingresa un código de acceso.": { en: "Please enter an access code." },
+  "Bienvenido": { en: "Welcome" },
+  "Código inválido": { en: "Invalid Code" },
+  "Código de acceso no reconocido.": { en: "Access code not recognized." },
+  "Error al validar el código.": { en: "Failed to validate code." },
+  "Introduce el código de acceso": { en: "Enter Access Code" },
+  "Entrar": { en: "Enter" },
+  "Mesas seleccionadas": { en: "Selected tables" },
+  "Cancelar Fusión": { en: "Cancel Merge" },
+  "Iniciar Orden Fusionada": { en: "Start Merged Order" },
+  "Enlazando": { en: "Linking" },
+  "Cancelar Enlace": { en: "Cancel Link" },
+  "Confirmar Enlace": { en: "Confirm Link" },
+  "Gestión de Órdenes": { en: "Order Management" },
+  "Administra tus órdenes activas": { en: "Manage your active orders" },
+  "Nueva Orden": { en: "New Order" },
+  "Órdenes Pendientes": { en: "Pending Orders" },
+  "En Cocina": { en: "In Kitchen" },
+  "Por Pagar": { en: "To Pay" },
+  "Ingresos Activos": { en: "Active Revenue" },
+  "Todas las Órdenes": { en: "All Orders" },
+  "Pendiente": { en: "Pending" },
+  "En Espera": { en: "On Hold" },
+  "Mis Órdenes Activas": { en: "My Active Orders" },
+  "No se encontraron órdenes activas": { en: "No active orders found" },
+  "Crear Nueva Orden": { en: "Create New Order" },
+  "Para llevar": { en: "Takeout" },
+  "cliente(s)": { en: "client(s)" },
+  "Iniciada a las": { en: "Started at" },
+  "Ver": { en: "View" },
+  "Agregar Artículos": { en: "Add Items" },
+  "Pagar": { en: "Pay" },
+  "Detalles de Orden": { en: "Order Details" },
+  "ID de Orden": { en: "Order ID" },
+  "Creada": { en: "Created" },
+  "Mesero": { en: "Server" },
+  "Clientes": { en: "Clients" },
+  "Artículos de la Orden": { en: "Order Items" },
+  "Procesar Pago": { en: "Process Payment" },
+  "Confirmar Fusión": { en: "Confirm Merge" },
+  "¿Deseas fusionar la orden de la Mesa": { en: "Do you want to merge the order from Table" },
+  "a la Mesa": { en: "to Table" },
+  "Fusionando...": { en: "Merging..." },
+  "Confirmar": { en: "Confirm" },
+  "Confirmar Cambio de Mesa": { en: "Confirm Table Change" },
+  "Mover orden de la Mesa": { en: "Move order from Table" },
+  "Moviendo...": { en: "Moving..." },
+  "Desvincular Mesa": { en: "Unlink Table" },
+  "Elige cómo desvincular la mesa": { en: "Choose how to unlink table" },
+  "Desvinculando...": { en: "Unlinking..." },
+  "Desvincular Esta Mesa": { en: "Unlink This Table" },
+  "Desvincular Todo el Grupo": { en: "Unlink Entire Group" },
+  "Selecciona Número de Clientes": { en: "Select Number of Guests" },
+  "Selecciona número de clientes (máx": { en: "Select number of guests (max" },
   
   // POS
   "Categorías": { en: "Categories" },
@@ -458,20 +515,30 @@ type LanguageContextType = {
 };
 
 const LanguageContext = createContext<LanguageContextType>({
-  language: "en",
+  language: "es",
   t: (key) => key,
 });
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  // Always use English
-  const [language, _setLanguage] = useState<Language>("en");
+  // Always use Spanish
+  const [language, _setLanguage] = useState<Language>("es");
 
-  // Translation function that returns English text
-  const t = (key: string): string => {
-    if (translations[key]) {
-      return translations[key].en;
+  // Translation function that returns Spanish text
+  const englishToSpanish = React.useMemo(() => {
+    const map: Record<string, string> = {};
+    for (const [es, val] of Object.entries(translations)) {
+      map[val.en] = es;
     }
-    // Return the original key if no translation is found
+    return map;
+  }, []);
+
+  const t = (key: string): string => {
+    if (englishToSpanish[key]) {
+      return englishToSpanish[key];
+    }
+    if (translations[key]) {
+      return key; // key is already Spanish
+    }
     return key;
   };
 

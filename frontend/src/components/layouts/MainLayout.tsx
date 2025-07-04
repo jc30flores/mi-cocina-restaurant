@@ -50,7 +50,7 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label }) => {
 
 // Navigation items
 const navItems = [
-  { to: "/pos", icon: <ShoppingCart className="h-4 w-4" />, label: "POS" },
+  { to: "/pos", icon: <ShoppingCart className="h-4 w-4" />, label: "Point of Sale" },
   { to: "/menu", icon: <ShoppingBag className="h-4 w-4" />, label: "Menú" },
   { to: "/inventory", icon: <LayoutDashboard className="h-4 w-4" />, label: "Inventario" },
   { to: "/online-orders", icon: <Globe className="h-4 w-4" />, label: "Online Orders" },
@@ -112,7 +112,7 @@ const MainLayout = ({ children, noPadding = false, fullWidth = false, hideNav = 
           <div className="flex-shrink-0 ml-2 flex items-center gap-2">
             <ThemeToggle />
             <Button variant="outline" size="sm" onClick={logout}>
-              Log Out
+              {t("Log Out")}
             </Button>
           </div>
         </div>
