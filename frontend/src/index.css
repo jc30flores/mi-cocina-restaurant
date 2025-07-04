@@ -56,6 +56,7 @@
     --sidebar-accent-foreground: 0 0% 94%;
     --sidebar-border: 0 0% 33%;
     --sidebar-ring: 0 0% 70%;
+    --menu-selected: 30 65% 45%;
   }
 
   .dark {
@@ -107,6 +108,7 @@
     --sidebar-accent-foreground: 0 0% 94%;
     --sidebar-border: 0 0% 33%;
     --sidebar-ring: 0 0% 70%;
+    --menu-selected: 30 65% 45%;
   }
 }
 

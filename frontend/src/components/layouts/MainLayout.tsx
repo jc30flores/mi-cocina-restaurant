@@ -36,7 +36,7 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label }) => {
         flex items-center px-3 py-2 rounded-lg whitespace-nowrap transition-colors duration-300
         text-[#d1d1d1]
         ${isActive
-          ? "bg-primary text-white"
+          ? "bg-menu-selected text-white"
           : "hover:bg-accent hover:text-white"
         }
       `}

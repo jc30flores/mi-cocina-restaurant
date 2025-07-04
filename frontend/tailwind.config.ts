@@ -49,14 +49,15 @@ export default {
 					DEFAULT: 'hsl(var(--popover))',
 					foreground: 'hsl(var(--popover-foreground))'
 				},
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
-				},
-				pos: {
-					primary: 'hsl(var(--pos-primary))',
-					secondary: 'hsl(var(--pos-secondary))',
-					accent: 'hsl(var(--pos-accent))',
+                                card: {
+                                        DEFAULT: 'hsl(var(--card))',
+                                        foreground: 'hsl(var(--card-foreground))'
+                                },
+                                'menu-selected': 'hsl(var(--menu-selected))',
+                                pos: {
+                                        primary: 'hsl(var(--pos-primary))',
+                                        secondary: 'hsl(var(--pos-secondary))',
+                                        accent: 'hsl(var(--pos-accent))',
 					success: 'hsl(var(--pos-success))',
 					warning: 'hsl(var(--pos-warning))',
 					danger: 'hsl(var(--pos-danger))',
