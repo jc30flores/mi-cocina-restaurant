@@ -40,11 +40,11 @@ const AddCategoryDialog: React.FC<Props> = ({ open, onOpenChange, existingCatego
     const formatted = toTitleCase(name.trim());
 
     if (!formatted) {
-      toast({ title: "Category name is required", variant: "destructive" });
+      toast({ title: "Se requiere nombre de categoría", variant: "destructive" });
       return;
     }
     if (existingCategories.includes(formatted.toLowerCase())) {
-      toast({ title: "Category already exists", variant: "destructive" });
+      toast({ title: "La categoría ya existe", variant: "destructive" });
       return;
     }
 
@@ -59,13 +59,13 @@ const AddCategoryDialog: React.FC<Props> = ({ open, onOpenChange, existingCatego
         console.error("Failed to create default subcategory", err);
       }
 
-      toast({ title: "Category created" });
+      toast({ title: "Categoría creada" });
       onCreated();
       reset();
       onOpenChange(false);
     } catch (error) {
       console.error(error);
-      toast({ title: "Failed to create category", variant: "destructive" });
+      toast({ title: "Error al crear la categoría", variant: "destructive" });
     }
   };
 
@@ -73,15 +73,15 @@ const AddCategoryDialog: React.FC<Props> = ({ open, onOpenChange, existingCatego
     <Dialog open={open} onOpenChange={(o)=>{ if(!o) reset(); onOpenChange(o);} }>
       <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
-          <DialogTitle>Create Category</DialogTitle>
+          <DialogTitle>Crear Categoría</DialogTitle>
           <DialogDescription>
-            Enter a unique name for the new menu category.
+            Ingresa un nombre único para la nueva categoría del menú.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="category-name" className="text-right">
-              Name
+              Nombre
             </Label>
             <Input
               id="category-name"
@@ -94,9 +94,9 @@ const AddCategoryDialog: React.FC<Props> = ({ open, onOpenChange, existingCatego
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={()=>onOpenChange(false)}>
-            Cancel
+            Cancelar
           </Button>
-          <Button onClick={handleCreate}>Create</Button>
+          <Button onClick={handleCreate}>Crear</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
