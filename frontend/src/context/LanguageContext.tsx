@@ -228,6 +228,8 @@ const translations: TranslationDictionary = {
   
   // Employees
   "Gestión de Empleados": { en: "Employee Management" },
+  "Gestión de Personal": { en: "Staff Management" },
+  "Administra a tus empleados y permisos": { en: "Manage your employees and permissions" },
   "Empleados Activos": { en: "Active Employees" },
   "Personal actualmente en turno": { en: "Staff currently on shift" },
   "Empleados Inactivos": { en: "Inactive Employees" },
@@ -254,6 +256,9 @@ const translations: TranslationDictionary = {
   "Descanso finalizado": { en: "Break ended" },
   "El empleado ha finalizado su descanso": { en: "Employee has ended their break" },
   "Fin Descanso": { en: "End Break" },
+  "Failed to update employee status": { en: "Failed to update employee status" },
+  "Failed to start break": { en: "Failed to start break" },
+  "Failed to end break": { en: "Failed to end break" },
   "Activo": { en: "Active" },
   "Break": { en: "Break" },
   "Inactivo": { en: "Inactive" },
@@ -426,6 +431,8 @@ const translations: TranslationDictionary = {
   "Idioma / Language": { en: "Language" },
   "Avanzado": { en: "Advanced" },
   "Información del Restaurante": { en: "Restaurant Information" },
+  "Actualiza la información básica de tu restaurante": { en: "Update your restaurant's basic information" },
+  "Aquí podrás ingresar nombre, dirección y datos de contacto del restaurante": { en: "This section will contain fields for restaurant name, address, contact info, etc." },
   "Configura la información básica de tu restaurante": { en: "Configure your restaurant's basic information" },
   "Nombre del Restaurante": { en: "Restaurant Name" },
   "Tipo de Restaurante": { en: "Restaurant Type" },
@@ -440,12 +447,18 @@ const translations: TranslationDictionary = {
   "Configura cómo opera tu restaurante": { en: "Configure how your restaurant operates" },
   "Horario de Apertura": { en: "Opening Time" },
   "Horario de Cierre": { en: "Closing Time" },
+  "Horarios de Atención": { en: "Business Hours" },
+  "Define los horarios de operación del restaurante": { en: "Set your restaurant's operating hours" },
+  "Incluye horarios de operación, días festivos y horarios especiales": { en: "This section will contain settings for operating hours, holidays, special schedules, etc." },
   "Opciones Generales": { en: "General Options" },
   "Propina automática (grupos > 6)": { en: "Automatic gratuity (groups > 6)" },
   "Permitir pedidos en línea": { en: "Allow online orders" },
   "Permitir reservaciones de mesa": { en: "Allow table reservations" },
   "Tasa de Impuesto Predeterminada": { en: "Default Tax Rate" },
   "Configuración de Pagos": { en: "Payment Settings" },
+  "Métodos de Pago": { en: "Payment Methods" },
+  "Configura los métodos de pago aceptados": { en: "Configure accepted payment methods" },
+  "Contendrá integraciones de pago y configuraciones de caja": { en: "This section will contain payment gateway integrations, cash settings, etc." },
   "Configura tus métodos de pago y procesadores": { en: "Configure your payment methods and processors" },
   "Métodos de Pago Aceptados": { en: "Accepted Payment Methods" },
   "Tarjetas de crédito": { en: "Credit cards" },
@@ -460,6 +473,7 @@ const translations: TranslationDictionary = {
   "Opción 2": { en: "Option 2" },
   "Opción 3": { en: "Option 3" },
   "Conecta tu POS con otros servicios": { en: "Connect your POS with other services" },
+  "Aquí podrás gestionar usuarios, roles y permisos": { en: "This section will contain user management, role settings, permissions, etc." },
   "Software Contable": { en: "Accounting Software" },
   "Selecciona un software contable": { en: "Select accounting software" },
   "Conectar": { en: "Connect" },
@@ -503,32 +517,48 @@ const translations: TranslationDictionary = {
   "Recetas": { en: "Recipes" },
   "¿Estás seguro de que quieres eliminar este producto?": { en: "Are you sure you want to delete this product?" },
   "Cargando...": { en: "Loading..." },
+  "Creado": { en: "Created" },
+  "Actualizado": { en: "Updated" },
   "Agregar Grupo": { en: "Add Group" },
   "Editar Grupo": { en: "Edit Group" },
   "Agregar Opción": { en: "Add Option" },
   "Nombre de Opción": { en: "Option name" },
   "Precio Extra": { en: "Extra" },
+  "Precio Adicional": { en: "Extra price" },
   "Agregar Empleado": { en: "Add Employee" },
+  "Editar empleado": { en: "Edit employee" },
   "Último Descanso": { en: "Last Break" },
   "Inicio Descanso": { en: "Break Start" },
   "Fin Descanso": { en: "Break End" },
   "No hay registros de horario completados": { en: "No completed time records" },
-  ,"Gestión de Mesas": { en: "Table Layout Management" }
-  ,"Configura el plano y asignación de mesas": { en: "Configure your restaurant's floor plan and table assignments" }
-  ,"Agregar, editar y eliminar mesas": { en: "Add, edit, and remove tables" }
-  ,"Crear y administrar secciones": { en: "Create and manage sections (dining areas)" }
-  ,"Posicionar mesas en el plano": { en: "Position tables visually on the floor plan" }
-  ,"Establecer propiedades de mesa": { en: "Set table properties like capacity and section" }
-  ,"Abrir Editor de Mesas": { en: "Open Table Layout Editor" }
-  ,"Configura tu sistema POS": { en: "Configure your restaurant POS system" }
-  ,"Restaurante": { en: "Restaurant" }
-  ,"Mesas": { en: "Tables" }
-  ,"Pagos": { en: "Payment" }
-  ,"Personal": { en: "Staff" }
-  ,"Notificaciones": { en: "Notifications" }
-  ,"Impresoras": { en: "Printers" }
-  ,"Idioma": { en: "Language" }
-  ,"Sistema": { en: "System" }
+  "Gestión de Mesas": { en: "Table Layout Management" },
+  "Configura el plano y asignación de mesas": { en: "Configure your restaurant's floor plan and table assignments" },
+  "Agregar, editar y eliminar mesas": { en: "Add, edit, and remove tables" },
+  "Crear y administrar secciones": { en: "Create and manage sections (dining areas)" },
+  "Posicionar mesas en el plano": { en: "Position tables visually on the floor plan" },
+  "Establecer propiedades de mesa": { en: "Set table properties like capacity and section" },
+  "Abrir Editor de Mesas": { en: "Open Table Layout Editor" },
+  "Configura tu sistema POS": { en: "Configure your restaurant POS system" },
+  "Restaurante": { en: "Restaurant" },
+  "Mesas": { en: "Tables" },
+  "Pagos": { en: "Payment" },
+  "Personal": { en: "Staff" },
+  "Notificaciones": { en: "Notifications" },
+  "Configuración de Notificaciones": { en: "Notification Settings" },
+  "Configura alertas y notificaciones": { en: "Configure alerts and notifications" },
+  "Configuraciones para alertas, notificaciones y recordatorios": { en: "This section will contain settings for alerts, notifications, and reminders." },
+  "Impresoras": { en: "Printers" },
+  "Configuración de Impresoras": { en: "Printer Setup" },
+  "Configura impresoras de recibos y cocina": { en: "Configure receipt and kitchen printers" },
+  "Conexiones de impresoras, plantillas y ajustes": { en: "This section will contain printer connections, templates, and settings." },
+  "Idioma": { en: "Language" },
+  "Idioma y Región": { en: "Language & Locale" },
+  "Configura el idioma y preferencias regionales": { en: "Set language and regional preferences" },
+  "Selecciona idioma, formatos de fecha y moneda": { en: "This section will contain language selection, date formats, currency settings, etc." },
+  "Sistema": { en: "System" },
+  "Información del Sistema": { en: "System Information" },
+  "Consulta detalles del sistema y realiza mantenimiento": { en: "View system details and perform maintenance" },
+  "Información del sistema, opciones de respaldo y herramientas de mantenimiento": { en: "This section will contain system info, backup options, and maintenance tools." }
 };
 
 interface LanguageProviderProps {

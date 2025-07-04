@@ -53,8 +53,8 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
     } catch (error) {
       console.error(error);
       toast({
-        title: "Error",
-        description: "Failed to update employee status",
+        title: t("Error"),
+        description: t("Failed to update employee status"),
         variant: "destructive",
       });
     }
@@ -75,8 +75,8 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
     } catch (error) {
       console.error(error);
       toast({
-        title: "Error",
-        description: "Failed to start break",
+        title: t("Error"),
+        description: t("Failed to start break"),
         variant: "destructive",
       });
     }
@@ -97,8 +97,8 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
     } catch (error) {
       console.error(error);
       toast({
-        title: "Error",
-        description: "Failed to end break",
+        title: t("Error"),
+        description: t("Failed to end break"),
         variant: "destructive",
       });
     }
@@ -107,11 +107,11 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
   const statusBadge = (status: string) => {
     switch (status) {
       case "active":
-        return <Badge variant="outline" className="bg-green-500 text-white">Active</Badge>;
+        return <Badge variant="outline" className="bg-green-500 text-white">{t("Activo")}</Badge>;
       case "break":
-        return <Badge variant="outline" className="bg-amber-500 text-white">Break</Badge>;
+        return <Badge variant="outline" className="bg-amber-500 text-white">{t("Break")}</Badge>;
       default:
-        return <Badge variant="outline" className="bg-gray-500 text-white">Inactive</Badge>;
+        return <Badge variant="outline" className="bg-gray-500 text-white">{t("Inactivo")}</Badge>;
     }
   };
 
@@ -164,7 +164,7 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
                         size="icon"
                         variant="outline"
                         onClick={() => onEdit(employee)}
-                        title="Edit employee"
+                        title={t("Edit employee")}
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
@@ -182,7 +182,7 @@ const ActiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={7} className="text-center">
-                  No active employees at this time
+                  {t("No active employees at this time")}
                 </TableCell>
               </TableRow>
             )}
@@ -219,8 +219,8 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
     } catch (error) {
       console.error(error);
       toast({
-        title: "Error",
-        description: "Failed to update employee status",
+        title: t("Error"),
+        description: t("Failed to update employee status"),
         variant: "destructive",
       });
     }
@@ -266,7 +266,7 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
                         size="icon"
                         variant="outline"
                         onClick={() => onEdit(employee)}
-                        title="Edit employee"
+                        title={t("Edit employee")}
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
@@ -283,7 +283,7 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={6} className="text-center">
-                  No inactive employees at this time
+                  {t("No inactive employees at this time")}
                 </TableCell>
               </TableRow>
             )}

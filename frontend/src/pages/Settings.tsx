@@ -113,28 +113,28 @@ const Settings = () => {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Restaurant Information</CardTitle>
+                    <CardTitle>{t("Información del Restaurante")}</CardTitle>
                     <CardDescription>
-                      Update your restaurant's basic information
+                      {t("Actualiza la información básica de tu restaurante")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      This section will contain fields for restaurant name, address, contact info, etc.
+                      {t("Aquí podrás ingresar nombre, dirección y datos de contacto del restaurante")}
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Business Hours</CardTitle>
+                    <CardTitle>{t("Horarios de Atención")}</CardTitle>
                     <CardDescription>
-                      Set your restaurant's operating hours
+                      {t("Define los horarios de operación del restaurante")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      This section will contain settings for operating hours, holidays, special schedules, etc.
+                      {t("Incluye horarios de operación, días festivos y horarios especiales")}
                     </p>
                   </CardContent>
                 </Card>
@@ -149,14 +149,14 @@ const Settings = () => {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Payment Methods</CardTitle>
+                    <CardTitle>{t("Métodos de Pago")}</CardTitle>
                     <CardDescription>
-                      Configure accepted payment methods
+                      {t("Configura los métodos de pago aceptados")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      This section will contain payment gateway integrations, cash settings, etc.
+                      {t("Contendrá integraciones de pago y configuraciones de caja")}
                     </p>
                   </CardContent>
                 </Card>
@@ -167,14 +167,14 @@ const Settings = () => {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Staff Management</CardTitle>
+                    <CardTitle>{t("Gestión de Personal")}</CardTitle>
                     <CardDescription>
-                      Manage your employees and permissions
+                      {t("Administra a tus empleados y permisos")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      This section will contain user management, role settings, permissions, etc.
+                      {t("Aquí podrás gestionar usuarios, roles y permisos")}
                     </p>
                   </CardContent>
                 </Card>
@@ -185,14 +185,14 @@ const Settings = () => {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Notification Settings</CardTitle>
+                    <CardTitle>{t("Configuración de Notificaciones")}</CardTitle>
                     <CardDescription>
-                      Configure alerts and notifications
+                      {t("Configura alertas y notificaciones")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      This section will contain settings for alerts, notifications, and reminders.
+                      {t("Configuraciones para alertas, notificaciones y recordatorios")}
                     </p>
                   </CardContent>
                 </Card>
@@ -203,14 +203,14 @@ const Settings = () => {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Printer Setup</CardTitle>
+                    <CardTitle>{t("Configuración de Impresoras")}</CardTitle>
                     <CardDescription>
-                      Configure receipt and kitchen printers
+                      {t("Configura impresoras de recibos y cocina")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      This section will contain printer connections, templates, and settings.
+                      {t("Conexiones de impresoras, plantillas y ajustes")}
                     </p>
                   </CardContent>
                 </Card>
@@ -221,14 +221,14 @@ const Settings = () => {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Language & Locale</CardTitle>
+                    <CardTitle>{t("Idioma y Región")}</CardTitle>
                     <CardDescription>
-                      Set language and regional preferences
+                      {t("Configura el idioma y preferencias regionales")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      This section will contain language selection, date formats, currency settings, etc.
+                      {t("Selecciona idioma, formatos de fecha y moneda")}
                     </p>
                   </CardContent>
                 </Card>
@@ -239,14 +239,14 @@ const Settings = () => {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>System Information</CardTitle>
+                    <CardTitle>{t("Información del Sistema")}</CardTitle>
                     <CardDescription>
-                      View system details and perform maintenance
+                      {t("Consulta detalles del sistema y realiza mantenimiento")}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">
-                      This section will contain system info, backup options, and maintenance tools.
+                      {t("Información del sistema, opciones de respaldo y herramientas de mantenimiento")}
                     </p>
                   </CardContent>
                 </Card>
