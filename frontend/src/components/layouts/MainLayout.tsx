@@ -11,7 +11,6 @@ import {
   SlidersHorizontal,
   LogOut
 } from "lucide-react";
-import ThemeToggle from "../ui/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -101,9 +100,8 @@ const MainLayout = ({ children, noPadding = false, fullWidth = false, hideNav = 
             </nav>
           </div>
 
-          {/* Theme Toggle and Log Out */}
-          <div className="flex-shrink-0 ml-2 flex items-center gap-2">
-            <ThemeToggle />
+          {/* Log Out */}
+          <div className="flex-shrink-0 ml-2">
             <Button
               variant="outline"
               size="icon"
