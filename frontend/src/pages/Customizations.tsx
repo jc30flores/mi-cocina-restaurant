@@ -70,10 +70,10 @@ const Customizations = () => {
       setGroups([...groups, created]);
       setAddOpen(false);
       setForm({ name: "", is_required: false, max_select: 1 });
-      toast({ title: "Created" });
+      toast({ title: t("Created") });
     } catch (e) {
       console.error(e);
-      toast({ title: "Error", variant: "destructive" });
+      toast({ title: t("Error"), variant: "destructive" });
     }
   };
 
@@ -83,10 +83,10 @@ const Customizations = () => {
       const updated = await updateCustomizationGroup(editGroup.id, form);
       setGroups(groups.map(g => (g.id === updated.id ? { ...g, ...updated } : g)));
       setEditGroup(null);
-      toast({ title: "Updated" });
+      toast({ title: t("Updated") });
     } catch (e) {
       console.error(e);
-      toast({ title: "Error", variant: "destructive" });
+      toast({ title: t("Error"), variant: "destructive" });
     }
   };
 
@@ -136,7 +136,7 @@ const Customizations = () => {
           <Plus className="h-4 w-4 mr-1" /> {t("Add Group")}
         </Button>
         {loading ? (
-          <div className="text-center">Loading...</div>
+          <div className="text-center">{t("Cargando...")}</div>
         ) : (
           <div className="space-y-6">
             {groups.map(g => (
@@ -163,8 +163,8 @@ const Customizations = () => {
                       <span>{o.name} {o.extra_price ? `(+$${o.extra_price})` : null}</span>
                       <div className="flex gap-1">
                         <Button variant="outline" size="icon" onClick={() => {
-                          const name = prompt("Name", o.name) || o.name;
-                          const ep = parseFloat(prompt("Extra price", String(o.extra_price || 0)) || "0");
+                          const name = prompt(t("Name"), o.name) || o.name;
+                          const ep = parseFloat(prompt(t("Extra price"), String(o.extra_price || 0)) || "0");
                           updateOption(g.id, o.id, name, ep);
                         }}><Pencil className="h-3 w-3" /></Button>
                         <Button variant="outline" size="icon" onClick={() => deleteOption(g.id, o.id)}><Trash2 className="h-3 w-3" /></Button>
@@ -173,8 +173,8 @@ const Customizations = () => {
                   ))}
                 </ul>
                 <div className="flex items-center gap-2">
-                  <Input placeholder="Option name" id={`opt-${g.id}`} className="flex-1" />
-                  <Input placeholder="Extra" id={`price-${g.id}`} type="number" step="0.01" className="w-24" />
+                  <Input placeholder={t("Option name")} id={`opt-${g.id}`} className="flex-1" />
+                  <Input placeholder={t("Extra")} id={`price-${g.id}`} type="number" step="0.01" className="w-24" />
                   <Button size="sm" onClick={() => {
                     const nameInput = document.getElementById(`opt-${g.id}`) as HTMLInputElement;
                     const priceInput = document.getElementById(`price-${g.id}`) as HTMLInputElement;

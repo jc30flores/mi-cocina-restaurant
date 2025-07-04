@@ -9,6 +9,7 @@ import { usePOS } from "@/context/POSContext";
 import { Button } from "@/components/ui/button";
 import { TableMap } from "@/components/TableMap/TableMap";
 import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { getTables, getMapElements, getSections, updateTable, getOrderItems, getOrders, mergeOrders as mergeOrdersApi, changeOrderTable, linkTables, unlinkTable } from "@/services/api";
 import type { TableData } from "@/components/TableMap/TableMap";
 import { 
@@ -90,6 +91,7 @@ const POS = () => {
   const { waiterColor } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [viewOrderDetails, setViewOrderDetails] = useState(null);
   const [showOrderDetails, setShowOrderDetails] = useState(false);
   const [statusFilter, setStatusFilter] = useState("all");
@@ -719,11 +721,11 @@ const POS = () => {
                 <TabsList className="mb-0 mr-2">
                   <TabsTrigger value="tableMap" className="flex items-center gap-2">
                     <LayoutGrid className="h-4 w-4" />
-                    <span>Table Map</span>
+                    <span>{t("Mapa de Mesas")}</span>
                   </TabsTrigger>
                   <TabsTrigger value="orderList" className="flex items-center gap-2">
                     <List className="h-4 w-4" />
-                    <span>Order List</span>
+                    <span>{t("Lista de Órdenes")}</span>
                   </TabsTrigger>
                 </TabsList>
                 {sections.map(sec => (
@@ -744,37 +746,37 @@ const POS = () => {
                   {/* Merge tables controls */}
                   {mergeMode && (
                     <div className="p-2 flex items-center gap-2">
-                      <span className="text-sm">Selected tables: {mergeSelection.join(', ')}</span>
+                      <span className="text-sm">{t("Mesas seleccionadas")}: {mergeSelection.join(', ')}</span>
                       <Button variant="outline" size="sm" onClick={cancelMerge}>
-                        Cancel Merge
+                        {t("Cancelar Fusión")}
                       </Button>
                       <Button size="sm" onClick={handleMerge} disabled={mergeSelection.length < 2}>
-                        Start Merged Order
+                        {t("Iniciar Orden Fusionada")}
                       </Button>
                     </div>
                   )}
                   {linkMode && (
                     <div className="p-2 flex items-center gap-2">
-                      <span className="text-sm">Linking: {linkSelection.join(', ')}</span>
+                      <span className="text-sm">{t("Enlazando")}: {linkSelection.join(', ')}</span>
                       <Button variant="outline" size="sm" onClick={cancelLink}>
-                        Cancel Link
+                        {t("Cancelar Enlace")}
                       </Button>
                       <Button size="sm" onClick={handleLink} disabled={linkSelection.length < 2}>
-                        Confirm Link
+                        {t("Confirmar Enlace")}
                       </Button>
                     </div>
                   )}
                   {mergeOrdersMode && (
                     <div className="p-2">
                       <Button variant="outline" size="sm" onClick={() => { setMergeOrdersMode(false); setMergeSourceTable(null); }}>
-                        Cancel
+                        {t("Cancelar")}
                       </Button>
                     </div>
                   )}
                   {moveOrderMode && (
                     <div className="p-2">
                       <Button variant="outline" size="sm" onClick={() => { setMoveOrderMode(false); setMoveSourceTable(null); }}>
-                        Cancel
+                        {t("Cancelar")}
                       </Button>
                     </div>
                   )}
@@ -797,9 +799,9 @@ const POS = () => {
               <TabsContent value="orderList">
                 <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold">Order Management</h1>
+                    <h1 className="text-2xl font-bold">{t("Gestión de Órdenes")}</h1>
                     <p className="text-muted-foreground">
-                      Manage your active orders
+                      {t("Administra tus órdenes activas")}
                     </p>
                   </div>
                   <Button 
@@ -808,7 +810,7 @@ const POS = () => {
                     className="mt-4 md:mt-0 flex items-center gap-2"
                   >
                     <PlusCircle className="w-5 h-5" />
-                    New Order
+                    {t("Nueva Orden")}
                   </Button>
                 </div>
                 
@@ -817,78 +819,78 @@ const POS = () => {
                   <Card>
                     <CardContent className="pt-6">
                       <div className="text-2xl font-bold">{activeOrders.filter(o => o.status === "new" || o.status === "hold").length}</div>
-                      <div className="text-muted-foreground text-sm">Pending Orders</div>
+                      <div className="text-muted-foreground text-sm">{t("Órdenes Pendientes")}</div>
                     </CardContent>
                   </Card>
                   <Card>
                     <CardContent className="pt-6">
                       <div className="text-2xl font-bold">{activeOrders.filter(o => o.status === "sent").length}</div>
-                      <div className="text-muted-foreground text-sm">In Kitchen</div>
+                      <div className="text-muted-foreground text-sm">{t("En Cocina")}</div>
                     </CardContent>
                   </Card>
                   <Card>
                     <CardContent className="pt-6">
                       <div className="text-2xl font-bold">{activeOrders.filter(o => o.status === "completed").length}</div>
-                      <div className="text-muted-foreground text-sm">To Pay</div>
+                      <div className="text-muted-foreground text-sm">{t("Por Pagar")}</div>
                     </CardContent>
                   </Card>
                   <Card>
                     <CardContent className="pt-6">
                       <div className="text-2xl font-bold">${activeOrders.reduce((sum, order) => sum + order.total, 0).toFixed(2)}</div>
-                      <div className="text-muted-foreground text-sm">Active Revenue</div>
+                      <div className="text-muted-foreground text-sm">{t("Ingresos Activos")}</div>
                     </CardContent>
                   </Card>
                 </div>
 
                 {/* Filter Controls */}
                 <div className="flex flex-wrap gap-2 mb-6">
-                  <Button 
-                    variant={statusFilter === "all" ? "default" : "outline"} 
+                  <Button
+                    variant={statusFilter === "all" ? "default" : "outline"}
                     size="sm"
                     onClick={() => setStatusFilter("all")}
                   >
-                    All Orders
+                    {t("Todas las Órdenes")}
                   </Button>
-                  <Button 
-                    variant={statusFilter === "new" ? "default" : "outline"} 
+                  <Button
+                    variant={statusFilter === "new" ? "default" : "outline"}
                     size="sm"
                     onClick={() => setStatusFilter("new")}
                   >
-                    Pending
+                    {t("Pendiente")}
                   </Button>
-                  <Button 
-                    variant={statusFilter === "hold" ? "default" : "outline"} 
+                  <Button
+                    variant={statusFilter === "hold" ? "default" : "outline"}
                     size="sm"
                     onClick={() => setStatusFilter("hold")}
                   >
-                    On Hold
+                    {t("En Espera")}
                   </Button>
-                  <Button 
-                    variant={statusFilter === "sent" ? "default" : "outline"} 
+                  <Button
+                    variant={statusFilter === "sent" ? "default" : "outline"}
                     size="sm"
                     onClick={() => setStatusFilter("sent")}
                   >
-                    In Kitchen
+                    {t("En Cocina")}
                   </Button>
-                  <Button 
-                    variant={statusFilter === "completed" ? "default" : "outline"} 
+                  <Button
+                    variant={statusFilter === "completed" ? "default" : "outline"}
                     size="sm"
                     onClick={() => setStatusFilter("completed")}
                   >
-                    To Pay
+                    {t("Por Pagar")}
                   </Button>
                 </div>
 
                 {/* Active Orders Section */}
                 <ScrollArea className="flex-1 h-[calc(100vh-22rem)]">
-                  <h2 className="text-xl font-semibold mb-4">My Active Orders</h2>
+                  <h2 className="text-xl font-semibold mb-4">{t("Mis Órdenes Activas")}</h2>
                   
                   {filteredOrders.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-48 text-muted-foreground">
-                      <p className="mb-4">No active orders found</p>
+                      <p className="mb-4">{t("No se encontraron órdenes activas")}</p>
                       <Button onClick={handleNewOrder} className="flex items-center gap-2">
                         <PlusCircle className="w-5 h-5" />
-                        Create New Order
+                        {t("Crear Nueva Orden")}
                       </Button>
                     </div>
                   ) : (
@@ -899,11 +901,11 @@ const POS = () => {
                             <div className="flex justify-between items-start mb-3">
                               <div>
                                 <h3 className="font-bold text-lg">
-                                  Table {order.tableNumber || "Takeout"}
+                                  {t("Mesa")} {order.tableNumber || t("Para llevar")}
                                 </h3>
                                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                   <Users className="w-4 h-4" />
-                                  <span>{order.clientCount || 1} client(s)</span>
+                                  <span>{order.clientCount || 1} {t("cliente(s)")}</span>
                                 </div>
                               </div>
                               <div>{getStatusBadge(order.status)}</div>
@@ -912,7 +914,7 @@ const POS = () => {
                               <div className="flex items-center gap-2">
                                 <Clock className="w-4 h-4 text-muted-foreground" />
                                 <span>
-                                  Started at {format(new Date(order.createdAt), "h:mm a")}
+                                  {t("Iniciada a las")} {format(new Date(order.createdAt), "h:mm a")}
                                 </span>
                               </div>
                               <div className="flex items-center gap-2 font-semibold">
@@ -931,7 +933,7 @@ const POS = () => {
                               className="flex-1"
                               onClick={() => handleViewDetails(order)}
                             >
-                              <Eye className="w-4 h-4 mr-1" /> View
+                              <Eye className="w-4 h-4 mr-1" /> {t("Ver")}
                             </Button>
                             <Button 
                               variant="outline" 
@@ -939,7 +941,7 @@ const POS = () => {
                               className="flex-1"
                               onClick={() => handleResumeOrder(order)}
                             >
-                              <PlusCircle className="w-4 h-4 mr-1" /> Add Items
+                              <PlusCircle className="w-4 h-4 mr-1" /> {t("Agregar Artículos")}
                             </Button>
                             <Button 
                               variant="default" 
@@ -947,7 +949,7 @@ const POS = () => {
                               className="flex-1"
                               onClick={() => handlePayOrder(order)}
                             >
-                              <DollarSign className="w-4 h-4 mr-1" /> Pay
+                              <DollarSign className="w-4 h-4 mr-1" /> {t("Pagar")}
                             </Button>
                           </CardFooter>
                         </Card>
@@ -983,7 +985,7 @@ const POS = () => {
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>
-              Order Details - Table {viewOrderDetails?.tableNumber || "Takeout"}
+              {t("Detalles de Orden")} - {t("Mesa")} {viewOrderDetails?.tableNumber || t("Para llevar")}
             </DialogTitle>
           </DialogHeader>
           
@@ -991,7 +993,7 @@ const POS = () => {
             <div className="py-4 space-y-4">
               <div className="flex justify-between items-center">
                 <div className="space-y-1">
-                  <div className="text-sm text-muted-foreground">Order ID</div>
+                  <div className="text-sm text-muted-foreground">{t("ID de Orden")}</div>
                   <div>{viewOrderDetails.id}</div>
                 </div>
                 <div>{getStatusBadge(viewOrderDetails.status)}</div>
@@ -999,15 +1001,15 @@ const POS = () => {
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <div className="text-sm text-muted-foreground">Created</div>
+                  <div className="text-sm text-muted-foreground">{t("Creada")}</div>
                   <div>{format(new Date(viewOrderDetails.createdAt), "MMM d, yyyy h:mm a")}</div>
                 </div>
                 <div className="space-y-1">
-                  <div className="text-sm text-muted-foreground">Server</div>
+                  <div className="text-sm text-muted-foreground">{t("Mesero")}</div>
                   <div>{viewOrderDetails.server}</div>
                 </div>
                 <div className="space-y-1">
-                  <div className="text-sm text-muted-foreground">Clients</div>
+                  <div className="text-sm text-muted-foreground">{t("Clientes")}</div>
                   <div>{viewOrderDetails.clientCount || 1}</div>
                 </div>
                 <div className="space-y-1">
@@ -1017,7 +1019,7 @@ const POS = () => {
               </div>
               
               <div className="border-t pt-4">
-                <h4 className="font-medium mb-3">Order Items</h4>
+                <h4 className="font-medium mb-3">{t("Artículos de la Orden")}</h4>
                 <div className="space-y-3 max-h-64 overflow-auto">
                   {viewOrderDetails.items.map((item, idx) => (
                     <div key={idx} className="flex justify-between border-b pb-2">
@@ -1027,7 +1029,7 @@ const POS = () => {
                         </div>
                         {item.clientNumber && (
                           <div className="text-xs text-muted-foreground">
-                            Client {item.clientNumber}
+                            {t("Cliente")} {item.clientNumber}
                           </div>
                         )}
                         {item.modifiers.length > 0 && (
@@ -1050,7 +1052,7 @@ const POS = () => {
           
           <DialogFooter className="flex justify-between">
             <Button variant="outline" onClick={() => setShowOrderDetails(false)}>
-              Close
+              {t("Cerrar")}
             </Button>
             <div className="flex gap-2">
               <Button 
@@ -1061,7 +1063,7 @@ const POS = () => {
                 }}
               >
                 <PlusCircle className="w-4 h-4 mr-1" />
-                Add Items
+                {t("Agregar Artículos")}
               </Button>
               <Button 
                 onClick={() => {
@@ -1070,7 +1072,7 @@ const POS = () => {
                 }}
               >
                 <DollarSign className="w-4 h-4 mr-1" />
-                Process Payment
+                {t("Procesar Pago")}
               </Button>
             </div>
           </DialogFooter>
@@ -1080,13 +1082,13 @@ const POS = () => {
       <Dialog open={showMergeConfirm} onOpenChange={setShowMergeConfirm}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle>Confirm Merge</DialogTitle>
+            <DialogTitle>{t("Confirmar Fusión")}</DialogTitle>
           </DialogHeader>
-          <p className="py-4">Do you want to merge the order from Table {mergeSourceTable} to Table {pendingMergeTarget}?</p>
+          <p className="py-4">{t("¿Deseas fusionar la orden de la Mesa")} {mergeSourceTable} {t("a la Mesa")} {pendingMergeTarget}?</p>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline" onClick={() => setShowMergeConfirm(false)} disabled={merging}>
-                Cancel
+                {t("Cancelar")}
               </Button>
             </DialogClose>
             <Button
@@ -1099,10 +1101,10 @@ const POS = () => {
             >
               {merging ? (
                 <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Merging...
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" /> {t("Fusionando...")}
                 </>
               ) : (
-                'Confirm'
+                t("Confirmar")
               )}
             </Button>
           </DialogFooter>
@@ -1112,17 +1114,17 @@ const POS = () => {
       <Dialog open={showMoveConfirm} onOpenChange={setShowMoveConfirm}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle>Confirm Table Change</DialogTitle>
+            <DialogTitle>{t("Confirmar Cambio de Mesa")}</DialogTitle>
           </DialogHeader>
-          <p className="py-4">Move order from Table {moveSourceTable} to Table {pendingMoveTarget}?</p>
+          <p className="py-4">{t("Mover orden de la Mesa")} {moveSourceTable} {t("a la Mesa")} {pendingMoveTarget}?</p>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline" onClick={() => setShowMoveConfirm(false)} disabled={moving}>
-                Cancel
+                {t("Cancelar")}
               </Button>
             </DialogClose>
             <Button onClick={async () => { if (pendingMoveTarget) { await executeMoveOrder(pendingMoveTarget); } }} disabled={moving}>
-              {moving ? (<><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Moving...</>) : 'Confirm'}
+              {moving ? (<><Loader2 className="w-4 h-4 mr-2 animate-spin" /> {t("Moviendo...")}</>) : t("Confirmar")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1131,9 +1133,9 @@ const POS = () => {
       <Dialog open={showUnlinkDialog} onOpenChange={setShowUnlinkDialog}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle>Unlink Table</DialogTitle>
+            <DialogTitle>{t("Desvincular Mesa")}</DialogTitle>
           </DialogHeader>
-          <p className="py-4">Choose how to unlink table {unlinkTableNumber}.</p>
+          <p className="py-4">{t("Elige cómo desvincular la mesa")} {unlinkTableNumber}.</p>
           <DialogFooter className="flex gap-2 justify-between">
             <Button
               variant="outline"
@@ -1143,10 +1145,10 @@ const POS = () => {
               {unlinking ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Unlinking...
+                  {t("Desvinculando...")}
                 </>
               ) : (
-                'Unlink This Table'
+                t("Desvincular Esta Mesa")
               )}
             </Button>
             <Button
@@ -1156,10 +1158,10 @@ const POS = () => {
               {unlinking ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Unlinking...
+                  {t("Desvinculando...")}
                 </>
               ) : (
-                'Unlink Entire Group'
+                t("Desvincular Todo el Grupo")
               )}
             </Button>
           </DialogFooter>
@@ -1169,12 +1171,12 @@ const POS = () => {
       <Dialog open={showClientCountDialog} onOpenChange={(open) => { if (!open) setShowClientCountDialog(false); }}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle>Select Number of Guests</DialogTitle>
+            <DialogTitle>{t("Selecciona Número de Clientes")}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">
-                Select number of guests (max {pendingCapacity})
+                {`${t("Selecciona número de clientes (máx")} ${pendingCapacity})`}
               </div>
               <div className="flex flex-wrap gap-2">
                 {Array.from({ length: pendingCapacity }, (_, i) => i + 1).map((n) => (
@@ -1190,7 +1192,7 @@ const POS = () => {
             </div>
           </div>
           <DialogFooter className="flex justify-end space-x-2">
-            <Button variant="outline" onClick={() => setShowClientCountDialog(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setShowClientCountDialog(false)}>{t("Cancelar")}</Button>
             <Button onClick={() => {
               if (pendingTableNumber) {
                 createOrder(pendingTableNumber, selectedClientCount);
@@ -1200,7 +1202,7 @@ const POS = () => {
               setMergeMode(false);
               setMergeSelection([]);
             }}>
-              Start Order
+              {t("Iniciar Orden")}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,20 +1,16 @@
 
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { 
-  ShoppingCart, 
-  ShoppingBag, 
-  LayoutDashboard, 
-  Globe, 
-  Gift, 
-  Users, 
+import {
+  ShoppingCart,
+  ShoppingBag,
+  LayoutDashboard,
+  Users,
   BarChart3,
   Settings,
-  Monitor,
-  HelpCircle,
-  SlidersHorizontal
+  SlidersHorizontal,
+  LogOut
 } from "lucide-react";
-import ThemeToggle from "../ui/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -50,17 +46,13 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label }) => {
 
 // Navigation items
 const navItems = [
-  { to: "/pos", icon: <ShoppingCart className="h-4 w-4" />, label: "POS" },
+  { to: "/pos", icon: <ShoppingCart className="h-4 w-4" />, label: "Punto de Venta" },
   { to: "/menu", icon: <ShoppingBag className="h-4 w-4" />, label: "Menú" },
   { to: "/inventory", icon: <LayoutDashboard className="h-4 w-4" />, label: "Inventario" },
-  { to: "/online-orders", icon: <Globe className="h-4 w-4" />, label: "Online Orders" },
-  { to: "/loyalty", icon: <Gift className="h-4 w-4" />, label: "Fidelización" },
   { to: "/employees", icon: <Users className="h-4 w-4" />, label: "Empleados" },
   { to: "/reports", icon: <BarChart3 className="h-4 w-4" />, label: "Reportes" },
-  { to: "/customizations", icon: <SlidersHorizontal className="h-4 w-4" />, label: "Customizations" },
-  { to: "/settings", icon: <Settings className="h-4 w-4" />, label: "Configuración" },
-  { to: "/hardware", icon: <Monitor className="h-4 w-4" />, label: "Hardware" },
-  { to: "/help", icon: <HelpCircle className="h-4 w-4" />, label: "Ayuda" }
+  { to: "/customizations", icon: <SlidersHorizontal className="h-4 w-4" />, label: "Personalizaciones" },
+  { to: "/settings", icon: <Settings className="h-4 w-4" />, label: "Configuración" }
 ];
 
 interface MainLayoutProps {
@@ -108,11 +100,15 @@ const MainLayout = ({ children, noPadding = false, fullWidth = false, hideNav = 
             </nav>
           </div>
 
-          {/* Theme Toggle and Log Out */}
-          <div className="flex-shrink-0 ml-2 flex items-center gap-2">
-            <ThemeToggle />
-            <Button variant="outline" size="sm" onClick={logout}>
-              Log Out
+          {/* Log Out */}
+          <div className="flex-shrink-0 ml-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={logout}
+              aria-label={t("Cerrar sesión")}
+            >
+              <LogOut className="h-4 w-4" />
             </Button>
           </div>
         </div>

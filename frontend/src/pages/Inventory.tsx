@@ -180,7 +180,7 @@ const InventoryList = () => {
   };
 
   if (isLoading) {
-    return <div className="flex justify-center p-8">Loading inventory...</div>;
+    return <div className="flex justify-center p-8">{t("Cargando inventario...")}</div>;
   }
 
   if (error) {

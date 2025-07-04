@@ -16,13 +16,9 @@ import POS from "./pages/POS";
 import Tables from "./pages/Tables";
 import Menu from "./pages/Menu";
 import Inventory from "./pages/Inventory";
-import OnlineOrders from "./pages/OnlineOrders";
-import Loyalty from "./pages/Loyalty";
 import Employees from "./pages/Employees";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
-import Hardware from "./pages/Hardware";
-import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
 import Customizations from "./pages/Customizations";
 
@@ -56,13 +52,9 @@ const App = () => {
                     <Route path="/menu" element={<PrivateRoute><Menu /></PrivateRoute>} />
                     <Route path="/customizations" element={<PrivateRoute><Customizations /></PrivateRoute>} />
                     <Route path="/inventory" element={<PrivateRoute><Inventory /></PrivateRoute>} />
-                    <Route path="/online-orders" element={<PrivateRoute><OnlineOrders /></PrivateRoute>} />
-                    <Route path="/loyalty" element={<PrivateRoute><Loyalty /></PrivateRoute>} />
                     <Route path="/employees" element={<PrivateRoute><Employees /></PrivateRoute>} />
                     <Route path="/reports" element={<PrivateRoute><Reports /></PrivateRoute>} />
                     <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
-                    <Route path="/hardware" element={<PrivateRoute><Hardware /></PrivateRoute>} />
-                    <Route path="/help" element={<PrivateRoute><Help /></PrivateRoute>} />
                     <Route path="*" element={<PrivateRoute><NotFound /></PrivateRoute>} />
                   </Routes>
                 </POSProvider>
