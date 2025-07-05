@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageHeader } from "@/components/ui/page-header";
-import { Settings as SettingsIcon, Building, CreditCard, Users, Bell, Map, Printer, Languages, Database } from "lucide-react";
+import { Settings as SettingsIcon, Users, Bell, Map } from "lucide-react";
+import AddEmployeeForm from "@/components/employees/AddEmployeeForm";
 import { TableMapEditor } from "@/components/TableMap/TableMapEditor";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -54,7 +55,7 @@ const TableLayoutSection = () => {
 
 const Settings = () => {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = React.useState("restaurant");
+  const [activeTab, setActiveTab] = React.useState("tables");
 
   return (
     <MainLayout>
@@ -69,17 +70,9 @@ const Settings = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <div className="overflow-auto scrollbar-none pb-2">
             <TabsList className="mb-8">
-              <TabsTrigger value="restaurant" className="flex items-center gap-2">
-                <Building className="h-4 w-4" />
-                <span>{t("Restaurante")}</span>
-              </TabsTrigger>
               <TabsTrigger value="tables" className="flex items-center gap-2">
                 <Map className="h-4 w-4" />
                 <span>{t("Mesas")}</span>
-              </TabsTrigger>
-              <TabsTrigger value="payment" className="flex items-center gap-2">
-                <CreditCard className="h-4 w-4" />
-                <span>{t("Pagos")}</span>
               </TabsTrigger>
               <TabsTrigger value="staff" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
@@ -89,18 +82,6 @@ const Settings = () => {
                 <Bell className="h-4 w-4" />
                 <span>{t("Notificaciones")}</span>
               </TabsTrigger>
-              <TabsTrigger value="printers" className="flex items-center gap-2">
-                <Printer className="h-4 w-4" />
-                <span>{t("Impresoras")}</span>
-              </TabsTrigger>
-              <TabsTrigger value="language" className="flex items-center gap-2">
-                <Languages className="h-4 w-4" />
-                <span>{t("Idioma")}</span>
-              </TabsTrigger>
-              <TabsTrigger value="system" className="flex items-center gap-2">
-                <Database className="h-4 w-4" />
-                <span>{t("Sistema")}</span>
-              </TabsTrigger>
             </TabsList>
           </div>
 
@@ -109,58 +90,8 @@ const Settings = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <TabsContent value="restaurant">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{t("Información del Restaurante")}</CardTitle>
-                    <CardDescription>
-                      {t("Actualiza la información básica de tu restaurante")}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      {t("Aquí podrás ingresar nombre, dirección y datos de contacto del restaurante")}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{t("Horarios de Atención")}</CardTitle>
-                    <CardDescription>
-                      {t("Define los horarios de operación del restaurante")}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      {t("Incluye horarios de operación, días festivos y horarios especiales")}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
             <TabsContent value="tables">
               <TableLayoutSection />
-            </TabsContent>
-
-            <TabsContent value="payment">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{t("Métodos de Pago")}</CardTitle>
-                    <CardDescription>
-                      {t("Configura los métodos de pago aceptados")}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      {t("Contendrá integraciones de pago y configuraciones de caja")}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
             </TabsContent>
 
             <TabsContent value="staff">
@@ -172,10 +103,11 @@ const Settings = () => {
                       {t("Administra a tus empleados y permisos")}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                       {t("Aquí podrás gestionar usuarios, roles y permisos")}
                     </p>
+                    <AddEmployeeForm />
                   </CardContent>
                 </Card>
               </div>
@@ -199,59 +131,6 @@ const Settings = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="printers">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{t("Configuración de Impresoras")}</CardTitle>
-                    <CardDescription>
-                      {t("Configura impresoras de recibos y cocina")}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      {t("Conexiones de impresoras, plantillas y ajustes")}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="language">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{t("Idioma y Región")}</CardTitle>
-                    <CardDescription>
-                      {t("Configura el idioma y preferencias regionales")}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      {t("Selecciona idioma, formatos de fecha y moneda")}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="system">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{t("Información del Sistema")}</CardTitle>
-                    <CardDescription>
-                      {t("Consulta detalles del sistema y realiza mantenimiento")}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      {t("Información del sistema, opciones de respaldo y herramientas de mantenimiento")}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
           </motion.div>
         </Tabs>
       </div>

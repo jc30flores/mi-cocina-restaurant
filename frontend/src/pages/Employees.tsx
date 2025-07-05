@@ -9,8 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/context/LanguageContext";
 import { getEmployees, updateEmployeeStatus, addBreakRecord, updateBreakRecord, Employee } from "@/services/employee.service";
-import { Plus, Pencil } from "lucide-react";
-import AddEmployeeDialog from "@/components/employees/AddEmployeeDialog";
+import { Pencil } from "lucide-react";
 import EditEmployeeDialog from "@/components/employees/EditEmployeeDialog";
 import BreakTimeTracker from "@/components/employees/BreakTimeTracker";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -377,7 +376,6 @@ const TimeSheet = () => {
 
 const Employees = () => {
   const { t } = useLanguage();
-  const [addEmployeeOpen, setAddEmployeeOpen] = useState(false);
   const [editEmployee, setEditEmployee] = useState<Employee | null>(null);
   const [editEmployeeOpen, setEditEmployeeOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -393,11 +391,6 @@ const Employees = () => {
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{t("Gestión de Empleados")}</h1>
-
-          <Button onClick={() => setAddEmployeeOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" />
-            {t("Agregar Empleado")}
-          </Button>
         </div>
         
         {isLoading ? (
@@ -426,11 +419,6 @@ const Employees = () => {
           </Tabs>
         )}
         
-        <AddEmployeeDialog 
-          open={addEmployeeOpen} 
-          onOpenChange={setAddEmployeeOpen} 
-          onSuccess={() => queryClient.invalidateQueries({ queryKey: ["employees"] })}
-        />
 
         <EditEmployeeDialog
           employee={editEmployee}
