@@ -10,6 +10,14 @@ from psycopg2.extras import RealDictCursor
 # Load environment variables from .env file
 load_dotenv()
 
+# Allowed order statuses
+ALLOWED_ORDER_STATUS = (
+    "preparando",
+    "servida",
+    "pagada",
+    "cancelada",
+)
+
 # Database configuration from environment
 DB_HOST = os.getenv("PG_HOST", "cfls9h51f4i86c.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com")
 DB_NAME = os.getenv("PG_DATABASE", "dfc2jmocqkio6k")
@@ -982,6 +990,8 @@ def create_order():
     columns = []
     values = []
     placeholders = []
+    if 'status' not in data:
+        data['status'] = 'preparando'
     for key in ['table_number', 'server', 'status', 'subtotal', 'tax', 'tip', 'total', 'discount_type', 'discount_value', 'payment_method', 'paid', 'client_count']:
         if key in data:
             columns.append(key)
@@ -1048,6 +1058,27 @@ def update_order(order_id):
         return jsonify(updated)
     else:
         return jsonify({"error": "Order not found"}), 404
+
+@app.route('/api/orders/<string:order_id>/status', methods=['PATCH'])
+def update_order_status(order_id):
+    data = request.get_json() or {}
+    status = data.get('status')
+    if status not in ALLOWED_ORDER_STATUS:
+        return jsonify({'error': 'Invalid status'}), 400
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute(
+        "UPDATE orders SET status = %s, updated_at = NOW() WHERE id = %s RETURNING *;",
+        (status, order_id),
+    )
+    updated = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+    if updated:
+        return jsonify(updated)
+    else:
+        return jsonify({'error': 'Order not found'}), 404
 
 @app.route('/api/orders/merge', methods=['POST'])
 def merge_orders_endpoint():

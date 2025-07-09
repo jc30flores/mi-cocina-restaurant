@@ -19,6 +19,7 @@ const translations: TranslationDictionary = {
   "Empleados": { en: "Employees" },
   "Menú": { en: "Menu" },
   "Inventario": { en: "Inventory" },
+  "Lista de Órdenes": { en: "Orders" },
   "Reportes": { en: "Reports" },
   "Personalizaciones": { en: "Customizations" },
   "Configuración": { en: "Settings" },
