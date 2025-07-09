@@ -63,6 +63,15 @@ export async function createOrder(data: any) {
   return handleResponse(res);
 }
 
+export async function createFullOrder(data: any) {
+  const res = await fetch(`${API_URL}/ordenes`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  return handleResponse(res);
+}
+
 export async function getOrder(id: string) {
   const res = await fetch(`${API_URL}/orders/${id}`);
   return handleResponse(res);

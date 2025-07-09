@@ -126,17 +126,18 @@ try:
 except Exception as e:
     print(f"Warning: could not ensure 'access_code' column in 'employees': {e}")
 
-# Ensure 'status' and 'order_type' columns exist in 'orders'
+# Ensure 'status', 'order_type' and 'area' columns exist in 'orders'
 try:
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute("ALTER TABLE orders ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'preparando';")
     cur.execute("ALTER TABLE orders ADD COLUMN IF NOT EXISTS order_type TEXT;")
+    cur.execute("ALTER TABLE orders ADD COLUMN IF NOT EXISTS area TEXT;")
     conn.commit()
     cur.close()
     conn.close()
 except Exception as e:
-    print(f"Warning: could not ensure 'status' or 'order_type' columns in 'orders': {e}")
+    print(f"Warning: could not ensure 'status', 'order_type' or 'area' columns in 'orders': {e}")
 
 # -------------------------------------------------------------
 # Menu Categories Table (for Menu Management)
@@ -1018,6 +1019,77 @@ def create_order():
     sql = f"INSERT INTO orders ({', '.join(columns)}) VALUES ({', '.join(placeholders)}) RETURNING *;"
     cur.execute(sql, tuple(values))
     new_order = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+    socketio.emit('orden_actualizada', new_order)
+    return jsonify(new_order), 201
+
+# Create a new order with items in a single request
+@app.route('/api/ordenes', methods=['POST'])
+def create_order_with_items():
+    data = request.get_json() or {}
+    items = data.pop('items', [])
+    table_number = data.get('table_number') or data.get('mesa')
+
+    # Default fields
+    if 'status' not in data:
+        data['status'] = 'preparando'
+    if 'order_type' not in data:
+        data['order_type'] = 'dine-in' if table_number else 'takeout'
+
+    # Determine area based on first item's subcategory name containing 'grill'
+    area = data.get('area')
+    if not area and items:
+        first_id = items[0].get('menu_item_id')
+        if first_id:
+            conn = get_db_connection()
+            cur = conn.cursor()
+            cur.execute(
+                """
+                SELECT ms.name FROM menu_items mi
+                JOIN menu_subcategories ms ON ms.id = mi.subcategory_id
+                WHERE mi.id = %s
+                """,
+                (first_id,),
+            )
+            row = cur.fetchone()
+            cur.close()
+            conn.close()
+            if row and row[0] and 'grill' in row[0].lower():
+                area = 'grill'
+    if not area:
+        area = 'kitchen'
+    data['area'] = area
+
+    columns, values, placeholders = [], [], []
+    for key in ['table_number', 'server', 'status', 'order_type', 'area', 'subtotal', 'tax', 'tip', 'total', 'discount_type', 'discount_value', 'payment_method', 'paid', 'client_count']:
+        if key in data:
+            columns.append(key)
+            values.append(data[key])
+            placeholders.append('%s')
+    if not columns:
+        return jsonify({'error': 'No order data provided'}), 400
+
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    sql = f"INSERT INTO orders ({', '.join(columns)}) VALUES ({', '.join(placeholders)}) RETURNING *;"
+    cur.execute(sql, tuple(values))
+    new_order = cur.fetchone()
+    order_id = new_order['id']
+
+    for item in items:
+        item_cols, item_vals, item_ph = [], [], []
+        item['order_id'] = order_id
+        for k in ['order_id', 'menu_item_id', 'quantity', 'price', 'notes', 'client_number']:
+            if k in item and item[k] is not None:
+                item_cols.append(k)
+                item_vals.append(item[k])
+                item_ph.append('%s')
+        if item_cols:
+            item_sql = f"INSERT INTO order_items ({', '.join(item_cols)}) VALUES ({', '.join(item_ph)});"
+            cur.execute(item_sql, tuple(item_vals))
+
     conn.commit()
     cur.close()
     conn.close()
