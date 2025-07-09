@@ -256,7 +256,11 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
                     <TableCell className="font-medium">{employee.name}</TableCell>
                     <TableCell>{employee.position}</TableCell>
                     <TableCell>{formattedLastShift}</TableCell>
-                    <TableCell>${employee.hourly_rate.toFixed(2)}/hr</TableCell>
+                    <TableCell>
+                      {employee.hourly_rate !== null && employee.hourly_rate !== undefined
+                        ? `$${employee.hourly_rate.toFixed(2)}/hr`
+                        : "-"}
+                    </TableCell>
                     <TableCell>
                       {lastBreakStart !== "-" ? `${lastBreakStart} - ${lastBreakEnd}` : "-"}
                     </TableCell>
@@ -345,7 +349,8 @@ const TimeSheet = () => {
                   hoursWorked = (totalMilliseconds - breakMilliseconds) / (1000 * 60 * 60);
                 }
                 
-                const total = hoursWorked * employee.hourly_rate;
+                const hourlyRate = employee.hourly_rate ?? 0;
+                const total = hoursWorked * hourlyRate;
                 
                 return (
                   <TableRow key={`${employee.id}-${employee.clock_out}`}>
