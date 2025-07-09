@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 import { getOrders, updateOrderStatus } from "@/services/api";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
@@ -17,11 +18,11 @@ import {
   DollarSign,
 } from "lucide-react";
 
-const STATUS_STYLES = {
-  preparando: "border-[#00cfff] shadow-[0_0_10px_#00cfff]",
-  servida: "border-[#ffbe3b] shadow-[0_0_10px_#ffbe3b]",
-  pagada: "border-[#00ff90] shadow-[0_0_10px_#00ff90]",
-  cancelada: "border-[#ff4f4f] shadow-[0_0_10px_#ff4f4f]",
+const STATUS_CLASSES = {
+  preparando: "border border-[#00cfff] shadow-[0_0_8px_#00cfff]",
+  servida: "border border-[#ffbe3b] shadow-[0_0_8px_#ffbe3b]",
+  pagada: "border border-[#00ff90] shadow-[0_0_8px_#00ff90]",
+  cancelada: "border border-[#ff4f4f] shadow-[0_0_8px_#ff4f4f]",
 };
 
 const STATUS_LABELS = {
@@ -153,7 +154,11 @@ export default function ListaOrdenes() {
             {filtered.map((order) => (
               <Card
                 key={order.id}
-                className={`border-2 ${STATUS_STYLES[order.status] || ""} ${highlight[order.id] ? 'animate-pulse' : ''}`}
+                className={cn(
+                  'border-2 transition-all',
+                  STATUS_CLASSES[order.status],
+                  highlight[order.id] && 'animate-pulse'
+                )}
               >
                 <CardContent className="p-4 space-y-2">
                   <div className="flex justify-between">
