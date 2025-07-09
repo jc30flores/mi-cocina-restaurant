@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify, request
 import uuid
 from flask_cors import CORS, cross_origin
+from flask_socketio import SocketIO
 from dotenv import load_dotenv
 import psycopg2
 from psycopg2 import errors as pg_errors
@@ -41,6 +42,7 @@ def get_db_connection():
 
 # Initialize Flask app
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")
 # Configure CORS to allow requests from the frontend
 CORS(app, origins="*", supports_credentials=True)
 @app.after_request
@@ -123,6 +125,18 @@ try:
     conn.close()
 except Exception as e:
     print(f"Warning: could not ensure 'access_code' column in 'employees': {e}")
+
+# Ensure 'status' and 'order_type' columns exist in 'orders'
+try:
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("ALTER TABLE orders ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'preparando';")
+    cur.execute("ALTER TABLE orders ADD COLUMN IF NOT EXISTS order_type TEXT;")
+    conn.commit()
+    cur.close()
+    conn.close()
+except Exception as e:
+    print(f"Warning: could not ensure 'status' or 'order_type' columns in 'orders': {e}")
 
 # -------------------------------------------------------------
 # Menu Categories Table (for Menu Management)
@@ -992,7 +1006,9 @@ def create_order():
     placeholders = []
     if 'status' not in data:
         data['status'] = 'preparando'
-    for key in ['table_number', 'server', 'status', 'subtotal', 'tax', 'tip', 'total', 'discount_type', 'discount_value', 'payment_method', 'paid', 'client_count']:
+    if 'order_type' not in data:
+        data['order_type'] = 'dine-in' if table_number else 'takeout'
+    for key in ['table_number', 'server', 'status', 'order_type', 'subtotal', 'tax', 'tip', 'total', 'discount_type', 'discount_value', 'payment_method', 'paid', 'client_count']:
         if key in data:
             columns.append(key)
             values.append(data[key])
@@ -1005,6 +1021,7 @@ def create_order():
     conn.commit()
     cur.close()
     conn.close()
+    socketio.emit('orden_actualizada', new_order)
     return jsonify(new_order), 201
     
 @app.route('/api/orders', methods=['GET'])
@@ -1076,6 +1093,7 @@ def update_order_status(order_id):
     cur.close()
     conn.close()
     if updated:
+        socketio.emit('orden_actualizada', updated)
         return jsonify(updated)
     else:
         return jsonify({'error': 'Order not found'}), 404
@@ -1910,7 +1928,7 @@ if __name__ == '__main__':
         attempts = 0
         while attempts < 3:
             try:
-                app.run(host='0.0.0.0', port=port, debug=True)
+                socketio.run(app, host='0.0.0.0', port=port, debug=True)
                 break
             except OSError as e:
                 if e.errno == 57:

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { io } from "socket.io-client";
 import MainLayout from "@/components/layouts/MainLayout";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -23,9 +24,18 @@ const STATUS_STYLES = {
   cancelada: "border-[#ff4f4f] shadow-[0_0_10px_#ff4f4f]",
 };
 
+const STATUS_LABELS = {
+  preparando: "🔵 Preparando",
+  servida: "🟡 Servida",
+  pagada: "🟢 Pagada",
+  cancelada: "🔴 Cancelada",
+};
+
 export default function ListaOrdenes() {
   const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [highlight, setHighlight] = useState({});
+  const socketRef = useRef(null);
 
   const load = async () => {
     try {
@@ -38,6 +48,31 @@ export default function ListaOrdenes() {
 
   useEffect(() => {
     load();
+    const wsUrl = import.meta.env.VITE_API_URL.replace(/^http/, "ws").replace(/\/api$/, "");
+    socketRef.current = io(wsUrl);
+    socketRef.current.on("orden_actualizada", (orden) => {
+      setOrders((prev) => {
+        const exists = prev.find((o) => o.id === orden.id);
+        let updated;
+        if (exists) {
+          updated = prev.map((o) => (o.id === orden.id ? orden : o));
+        } else {
+          updated = [orden, ...prev];
+          setHighlight((h) => ({ ...h, [orden.id]: true }));
+          setTimeout(() =>
+            setHighlight((h) => {
+              const { [orden.id]: _, ...rest } = h;
+              return rest;
+            }),
+            2000
+          );
+        }
+        return updated;
+      });
+    });
+    return () => {
+      socketRef.current?.disconnect();
+    };
   }, []);
 
   const counts = {
@@ -55,7 +90,6 @@ export default function ListaOrdenes() {
 
   const changeStatus = async (id, status) => {
     await updateOrderStatus(id, status);
-    load();
   };
 
   const renderActions = (order) => {
@@ -119,7 +153,7 @@ export default function ListaOrdenes() {
             {filtered.map((order) => (
               <Card
                 key={order.id}
-                className={`border-2 ${STATUS_STYLES[order.status] || ""}`}
+                className={`border-2 ${STATUS_STYLES[order.status] || ""} ${highlight[order.id] ? 'animate-pulse' : ''}`}
               >
                 <CardContent className="p-4 space-y-2">
                   <div className="flex justify-between">
@@ -128,7 +162,7 @@ export default function ListaOrdenes() {
                         ? `Mesa ${order.table_number}`
                         : "Para Llevar"}
                     </h3>
-                    <Badge>{order.status}</Badge>
+                    <Badge>{STATUS_LABELS[order.status] || order.status}</Badge>
                   </div>
                   <div className="text-sm text-muted-foreground">
                     ⏱️ Hace {formatDistanceToNow(new Date(order.created_at), { locale: es })}
