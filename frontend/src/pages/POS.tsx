@@ -64,19 +64,17 @@ const computeMergedDimensions = (group: TableData[]) => {
 // Helper function to format order status
 const getStatusBadge = (status) => {
   const statusStyles = {
-    new: "bg-blue-100 text-blue-800 hover:bg-blue-200",
-    hold: "bg-yellow-100 text-yellow-800 hover:bg-yellow-200",
-    sent: "bg-purple-100 text-purple-800 hover:bg-purple-200",
-    completed: "bg-green-100 text-green-800 hover:bg-green-200",
-    paid: "bg-gray-100 text-gray-800 hover:bg-gray-200",
+    preparando: "bg-blue-100 text-blue-800 hover:bg-blue-200",
+    servida: "bg-yellow-100 text-yellow-800 hover:bg-yellow-200",
+    pagada: "bg-green-100 text-green-800 hover:bg-green-200",
+    cancelada: "bg-gray-100 text-gray-800 hover:bg-gray-200",
   };
 
   const statusLabels = {
-    new: "Pending",
-    hold: "On Hold",
-    sent: "In Kitchen",
-    completed: "To Pay",
-    paid: "Paid",
+    preparando: "Preparando",
+    servida: "Servida",
+    pagada: "Pagada",
+    cancelada: "Cancelada",
   };
 
   return (
@@ -134,7 +132,7 @@ const POS = () => {
     try {
       const all = await getOrders();
       const orderData = all
-        .filter(o => o.status !== 'paid')
+        .filter(o => o.status !== 'pagada')
         .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
       const formatted = await Promise.all(
         orderData.map(async order => {
@@ -353,7 +351,7 @@ const POS = () => {
 
   // Get active orders for the current user (simple version, will need user context in real app)
   const activeOrders = orders.filter(
-    (order) => order.status !== "paid" && order.server === "Demo User"
+    (order) => order.status !== "pagada" && order.server === "Demo User"
   );
 
   // Apply filter if needed
@@ -818,20 +816,20 @@ const POS = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                   <Card>
                     <CardContent className="pt-6">
-                      <div className="text-2xl font-bold">{activeOrders.filter(o => o.status === "new" || o.status === "hold").length}</div>
-                      <div className="text-muted-foreground text-sm">{t("Órdenes Pendientes")}</div>
+                      <div className="text-2xl font-bold">{activeOrders.filter(o => o.status === "preparando").length}</div>
+                      <div className="text-muted-foreground text-sm">{t("Preparando")}</div>
                     </CardContent>
                   </Card>
                   <Card>
                     <CardContent className="pt-6">
-                      <div className="text-2xl font-bold">{activeOrders.filter(o => o.status === "sent").length}</div>
-                      <div className="text-muted-foreground text-sm">{t("En Cocina")}</div>
+                      <div className="text-2xl font-bold">{activeOrders.filter(o => o.status === "servida").length}</div>
+                      <div className="text-muted-foreground text-sm">{t("Servidas")}</div>
                     </CardContent>
                   </Card>
                   <Card>
                     <CardContent className="pt-6">
-                      <div className="text-2xl font-bold">{activeOrders.filter(o => o.status === "completed").length}</div>
-                      <div className="text-muted-foreground text-sm">{t("Por Pagar")}</div>
+                      <div className="text-2xl font-bold">{activeOrders.filter(o => o.status === "pagada").length}</div>
+                      <div className="text-muted-foreground text-sm">{t("Pagadas")}</div>
                     </CardContent>
                   </Card>
                   <Card>
@@ -852,32 +850,18 @@ const POS = () => {
                     {t("Todas las Órdenes")}
                   </Button>
                   <Button
-                    variant={statusFilter === "new" ? "default" : "outline"}
+                    variant={statusFilter === "preparando" ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setStatusFilter("new")}
+                    onClick={() => setStatusFilter("preparando")}
                   >
-                    {t("Pendiente")}
+                    {t("Preparando")}
                   </Button>
                   <Button
-                    variant={statusFilter === "hold" ? "default" : "outline"}
+                    variant={statusFilter === "servida" ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setStatusFilter("hold")}
+                    onClick={() => setStatusFilter("servida")}
                   >
-                    {t("En Espera")}
-                  </Button>
-                  <Button
-                    variant={statusFilter === "sent" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setStatusFilter("sent")}
-                  >
-                    {t("En Cocina")}
-                  </Button>
-                  <Button
-                    variant={statusFilter === "completed" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setStatusFilter("completed")}
-                  >
-                    {t("Por Pagar")}
+                    {t("Servidas")}
                   </Button>
                 </div>
 
