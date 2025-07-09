@@ -87,7 +87,7 @@ export async function updateOrder(id: string, data: any) {
 }
 
 export async function updateOrderStatus(id: string, status: string) {
-  const res = await fetch(`${API_URL}/orders/${id}/status`, {
+  const res = await fetch(`${API_URL}/ordenes/${id}/status`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ status }),

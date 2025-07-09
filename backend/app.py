@@ -1149,6 +1149,7 @@ def update_order(order_id):
         return jsonify({"error": "Order not found"}), 404
 
 @app.route('/api/orders/<string:order_id>/status', methods=['PATCH'])
+@app.route('/api/ordenes/<string:order_id>/status', methods=['PATCH'])
 def update_order_status(order_id):
     data = request.get_json() or {}
     status = data.get('status')
