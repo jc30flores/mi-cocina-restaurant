@@ -377,9 +377,9 @@ const InventoryList = () => {
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>{t("Edit Product")}</DialogTitle>
+            <DialogTitle>{t("Editar Producto")}</DialogTitle>
             <DialogDescription>
-              {t("Modify the product information.")}
+              {t("Modifica la información del producto.")}
             </DialogDescription>
           </DialogHeader>
           {editingItem && (

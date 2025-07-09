@@ -255,7 +255,7 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
         <h3 className="text-xl font-medium">{title}</h3>
         <div className="flex gap-2">
           <Button variant="secondary" size="sm" onClick={() => setAddSubOpen(true)}>
-            <Plus className="h-4 w-4 mr-1" /> {t("Add Subcategory")}
+            <Plus className="h-4 w-4 mr-1" /> {t("Agregar Subcategoría")}
           </Button>
           <Button size="sm" onClick={handleAddButtonClick}>
             <Plus className="h-4 w-4 mr-1" /> {t("Add Product")}
@@ -344,7 +344,7 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <Label htmlFor="subcat">Subcategory</Label>
+                <Label htmlFor="subcat">{t("Subcategoría")}</Label>
                 <Select
                   id="subcat"
                   value={newItem.subcategory_id || defaultSub?.id}
@@ -375,7 +375,7 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
               </div>
             </div>
             <div className="flex flex-col gap-1">
-              <Label htmlFor="description">{t("Description")}</Label>
+              <Label htmlFor="description">{t("Descripción")}</Label>
               <Textarea
                 id="description"
                 value={newItem.description ?? ""}
@@ -384,10 +384,10 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
               />
             </div>
             <div className="col-span-4 space-y-2">
-              <h4 className="font-medium">{t("Customizations")}</h4>
+              <h4 className="font-medium">{t("Personalizaciones")}</h4>
               <div className="space-y-1 px-2">
                 <Input
-                  placeholder={t("Search for customization groups to add to this product")}
+                  placeholder={t("Busca grupos de personalización para añadir a este producto")}
                   value={newGroupSearch}
                   onChange={e => setNewGroupSearch(e.target.value)}
                 />
@@ -466,9 +466,9 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[600px] p-0 flex flex-col max-h-[80vh]">
           <DialogHeader className="p-4 pb-2">
-            <DialogTitle>{t("Edit Product")}</DialogTitle>
+            <DialogTitle>{t("Editar Producto")}</DialogTitle>
             <DialogDescription>
-              {t("Modify the product information.")}
+              {t("Modifica la información del producto.")}
             </DialogDescription>
           </DialogHeader>
           {editingItem && (
@@ -501,7 +501,7 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Label htmlFor="edit-sub">Subcategory</Label>
+                  <Label htmlFor="edit-sub">{t("Subcategoría")}</Label>
                   <Select
                     id="edit-sub"
                     value={editingItem.subcategory_id || defaultSub?.id}
@@ -532,7 +532,7 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
                 </div>
               </div>
               <div className="flex flex-col gap-1">
-                <Label htmlFor="edit-description">{t("Description")}</Label>
+                <Label htmlFor="edit-description">{t("Descripción")}</Label>
                 <Textarea
                   id="edit-description"
                   value={editingItem.description ?? ""}
@@ -543,10 +543,10 @@ const MenuSection = ({ title, items, setItems, categoryKey, subcategories, refre
                 />
               </div>
               <div className="col-span-4 space-y-2">
-                <h4 className="font-medium">{t("Customizations")}</h4>
+                <h4 className="font-medium">{t("Personalizaciones")}</h4>
                 <div className="space-y-1 px-2">
                   <Input
-                    placeholder={t("Search for customization groups to add to this product")}
+                    placeholder={t("Busca grupos de personalización para añadir a este producto")}
                     value={editGroupSearch}
                     onChange={e => setEditGroupSearch(e.target.value)}
                   />
@@ -708,10 +708,10 @@ const Menu = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem onSelect={() => setAddCatOpen(true)}>
-                      Add Category
+                      {t("Agregar Categoría")}
                     </DropdownMenuItem>
                     <DropdownMenuItem onSelect={() => setEditCatOpen(true)}>
-                      Edit Categories
+                      {t("Editar Categorías")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

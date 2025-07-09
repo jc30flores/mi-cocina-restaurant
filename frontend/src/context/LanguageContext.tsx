@@ -94,6 +94,10 @@ const translations: TranslationDictionary = {
   "Desvincular Todo el Grupo": { en: "Unlink Entire Group" },
   "Selecciona Número de Clientes": { en: "Select Number of Guests" },
   "Selecciona número de clientes (máx": { en: "Select number of guests (max" },
+
+  "Subcategoría": { en: "Subcategory" },
+  "Descripción": { en: "Description" },
+  "Busca grupos de personalización para añadir a este producto": { en: "Search for customization groups to add to this product" },
   
   // POS
   "Categorías": { en: "Categories" },
@@ -140,6 +144,9 @@ const translations: TranslationDictionary = {
   "Edición de producto": { en: "Product Editing" },
   "Agregar Producto": { en: "Add Product" },
   "Agregar nuevo producto": { en: "Add New Product" },
+  "Agregar Categoría": { en: "Add Category" },
+  "Editar Categorías": { en: "Edit Categories" },
+  "Agregar Subcategoría": { en: "Add Subcategory" },
   
   // Inventory Page
   "Dashboard de Inventario": { en: "Inventory Dashboard" },
