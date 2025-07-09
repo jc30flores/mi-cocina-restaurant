@@ -9,8 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/context/LanguageContext";
 import { getEmployees, updateEmployeeStatus, addBreakRecord, updateBreakRecord, Employee } from "@/services/employee.service";
-import { Plus, Pencil } from "lucide-react";
-import AddEmployeeDialog from "@/components/employees/AddEmployeeDialog";
+import { Pencil } from "lucide-react";
 import EditEmployeeDialog from "@/components/employees/EditEmployeeDialog";
 import BreakTimeTracker from "@/components/employees/BreakTimeTracker";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -257,7 +256,11 @@ const InactiveEmployees: React.FC<EmployeesSubProps> = ({ onEdit }) => {
                     <TableCell className="font-medium">{employee.name}</TableCell>
                     <TableCell>{employee.position}</TableCell>
                     <TableCell>{formattedLastShift}</TableCell>
-                    <TableCell>${employee.hourly_rate.toFixed(2)}/hr</TableCell>
+                    <TableCell>
+                      {employee.hourly_rate !== null && employee.hourly_rate !== undefined
+                        ? `$${employee.hourly_rate.toFixed(2)}/hr`
+                        : "-"}
+                    </TableCell>
                     <TableCell>
                       {lastBreakStart !== "-" ? `${lastBreakStart} - ${lastBreakEnd}` : "-"}
                     </TableCell>
@@ -346,7 +349,8 @@ const TimeSheet = () => {
                   hoursWorked = (totalMilliseconds - breakMilliseconds) / (1000 * 60 * 60);
                 }
                 
-                const total = hoursWorked * employee.hourly_rate;
+                const hourlyRate = employee.hourly_rate ?? 0;
+                const total = hoursWorked * hourlyRate;
                 
                 return (
                   <TableRow key={`${employee.id}-${employee.clock_out}`}>
@@ -377,7 +381,6 @@ const TimeSheet = () => {
 
 const Employees = () => {
   const { t } = useLanguage();
-  const [addEmployeeOpen, setAddEmployeeOpen] = useState(false);
   const [editEmployee, setEditEmployee] = useState<Employee | null>(null);
   const [editEmployeeOpen, setEditEmployeeOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -393,11 +396,6 @@ const Employees = () => {
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{t("Gestión de Empleados")}</h1>
-
-          <Button onClick={() => setAddEmployeeOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" />
-            {t("Agregar Empleado")}
-          </Button>
         </div>
         
         {isLoading ? (
@@ -426,11 +424,6 @@ const Employees = () => {
           </Tabs>
         )}
         
-        <AddEmployeeDialog 
-          open={addEmployeeOpen} 
-          onOpenChange={setAddEmployeeOpen} 
-          onSuccess={() => queryClient.invalidateQueries({ queryKey: ["employees"] })}
-        />
 
         <EditEmployeeDialog
           employee={editEmployee}
