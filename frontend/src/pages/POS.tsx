@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { TableMap } from "@/components/TableMap/TableMap";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { getTables, getMapElements, getSections, updateTable, getOrderItems, getOrders, mergeOrders as mergeOrdersApi, changeOrderTable, linkTables, unlinkTable } from "@/services/api";
+import { getTables, getMapElements, getSections, updateTable, getOrderItems, getOrders, mergeOrders as mergeOrdersApi, changeOrderTable, linkTables, unlinkTable, updateOrderStatus } from "@/services/api";
 import type { TableData } from "@/components/TableMap/TableMap";
 import { 
   PlusCircle,
@@ -392,6 +392,15 @@ const POS = () => {
 
   const handlePayOrder = (order) => {
     // This would trigger the payment process in a real app
+  };
+
+  const marcarComoServida = async (id: string) => {
+    try {
+      await updateOrderStatus(id, "servida");
+      await refreshOrders();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleViewDetails = async (order) => {
@@ -919,17 +928,27 @@ const POS = () => {
                             >
                               <Eye className="w-4 h-4 mr-1" /> {t("Ver")}
                             </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
+                            <Button
+                              variant="outline"
+                              size="sm"
                               className="flex-1"
                               onClick={() => handleResumeOrder(order)}
                             >
                               <PlusCircle className="w-4 h-4 mr-1" /> {t("Agregar Artículos")}
                             </Button>
-                            <Button 
-                              variant="default" 
-                              size="sm" 
+                            {order.status === "preparando" && (
+                              <Button
+                                variant="secondary"
+                                size="sm"
+                                className="flex-1"
+                                onClick={() => marcarComoServida(order.id)}
+                              >
+                                🍽️ {t("Servida")}
+                              </Button>
+                            )}
+                            <Button
+                              variant="default"
+                              size="sm"
                               className="flex-1"
                               onClick={() => handlePayOrder(order)}
                             >

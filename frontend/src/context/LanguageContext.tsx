@@ -66,6 +66,7 @@ const translations: TranslationDictionary = {
   "En Espera": { en: "On Hold" },
   "Preparando": { en: "Preparing" },
   "Servidas": { en: "Served" },
+  "Servida": { en: "Served" },
   "Marcar como Servida": { en: "Mark as Served" },
   "Pagadas": { en: "Paid" },
   "Canceladas": { en: "Cancelled" },
