@@ -21,7 +21,6 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Customizations from "./pages/Customizations";
-import ListaOrdenes from "./pages/ListaOrdenes";
 
 // Components
 import { TableMapEditor } from "./components/TableMap/TableMapEditor";
@@ -53,7 +52,6 @@ const App = () => {
                     <Route path="/menu" element={<PrivateRoute><Menu /></PrivateRoute>} />
                     <Route path="/customizations" element={<PrivateRoute><Customizations /></PrivateRoute>} />
                     <Route path="/inventory" element={<PrivateRoute><Inventory /></PrivateRoute>} />
-                    <Route path="/lista-ordenes" element={<PrivateRoute><ListaOrdenes /></PrivateRoute>} />
                     <Route path="/employees" element={<PrivateRoute><Employees /></PrivateRoute>} />
                     <Route path="/reports" element={<PrivateRoute><Reports /></PrivateRoute>} />
                     <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />

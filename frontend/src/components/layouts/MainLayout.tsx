@@ -50,7 +50,6 @@ const navItems = [
   { to: "/pos", icon: <ShoppingCart className="h-4 w-4" />, label: "Punto de Venta" },
   { to: "/menu", icon: <ShoppingBag className="h-4 w-4" />, label: "Menú" },
   { to: "/inventory", icon: <LayoutDashboard className="h-4 w-4" />, label: "Inventario" },
-  { to: "/lista-ordenes", icon: <List className="h-4 w-4" />, label: "Lista de Órdenes" },
   { to: "/employees", icon: <Users className="h-4 w-4" />, label: "Empleados" },
   { to: "/reports", icon: <BarChart3 className="h-4 w-4" />, label: "Reportes" },
   { to: "/customizations", icon: <SlidersHorizontal className="h-4 w-4" />, label: "Personalizaciones" },
