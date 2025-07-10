@@ -15,6 +15,7 @@ import {
   getSubcategories,
   getTableLink,
   payLinkedTables,
+  updateOrderStatus,
 } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 
@@ -130,6 +131,7 @@ interface POSContextType {
   resumeOrder: (order: Order) => void;
   loading: boolean;
   sending: boolean;
+  markOrderServed: (id: string) => Promise<void>;
 }
 
 const POSContext = createContext<POSContextType | undefined>(undefined);
@@ -705,6 +707,20 @@ export const POSProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const markOrderServed = async (orderId: string) => {
+    try {
+      await updateOrderStatus(orderId, "servida");
+      await loadOrders();
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update order status. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   // Clear the current order
   const clearOrder = () => {
     setCurrentOrder(null);
@@ -860,6 +876,7 @@ export const POSProvider = ({ children }: { children: React.ReactNode }) => {
         applyDiscount,
         splitOrder,
         resumeOrder,
+        markOrderServed,
         loading,
         sending
       }}

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { TableMap } from "@/components/TableMap/TableMap";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { getTables, getMapElements, getSections, updateTable, getOrderItems, getOrders, mergeOrders as mergeOrdersApi, changeOrderTable, linkTables, unlinkTable, updateOrderStatus } from "@/services/api";
+import { getTables, getMapElements, getSections, updateTable, getOrderItems, getOrders, mergeOrders as mergeOrdersApi, changeOrderTable, linkTables, unlinkTable } from "@/services/api";
 import type { TableData } from "@/components/TableMap/TableMap";
 import { 
   PlusCircle,
@@ -85,7 +85,7 @@ const getStatusBadge = (status) => {
 };
 
 const POS = () => {
-  const { currentOrder, orders, resumeOrder, createOrder, cancelOrder, setOrders, menuItems } = usePOS();
+  const { currentOrder, orders, resumeOrder, createOrder, cancelOrder, setOrders, menuItems, markOrderServed } = usePOS();
   const { waiterColor } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -394,14 +394,6 @@ const POS = () => {
     // This would trigger the payment process in a real app
   };
 
-  const marcarComoServida = async (id: string) => {
-    try {
-      await updateOrderStatus(id, "servida");
-      await refreshOrders();
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   const handleViewDetails = async (order) => {
     try {
@@ -941,7 +933,7 @@ const POS = () => {
                                 variant="secondary"
                                 size="sm"
                                 className="flex-1"
-                                onClick={() => marcarComoServida(order.id)}
+                                onClick={() => markOrderServed(order.id)}
                               >
                                 {t("Servida")}
                               </Button>
