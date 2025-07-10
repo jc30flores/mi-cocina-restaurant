@@ -11,13 +11,7 @@ import { cn } from "@/lib/utils";
 import { getOrders, updateOrderStatus } from "@/services/api";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
-import {
-  CheckCircle,
-  XCircle,
-  ShoppingBag,
-  Bike,
-  DollarSign,
-} from "lucide-react";
+import { XCircle, ShoppingBag, Bike } from "lucide-react";
 
 const STATUS_CLASSES = {
   preparando: "border border-[#00cfff] shadow-[0_0_8px_#00cfff]",
@@ -39,6 +33,10 @@ export default function ListaOrdenes() {
   const [highlight, setHighlight] = useState({});
   const socketRef = useRef(null);
   const { t } = useLanguage();
+
+  const verOrden = (orden) => {
+    console.log("Ver orden", orden);
+  };
 
   const load = async () => {
     try {
@@ -108,15 +106,21 @@ export default function ListaOrdenes() {
         <>
           <Button
             size="sm"
-            onClick={() => changeStatus(order.id, "servida")}
+            onClick={(e) => {
+              e.stopPropagation();
+              changeStatus(order.id, "servida");
+            }}
             className="flex-1"
           >
-            <CheckCircle className="w-4 h-4 mr-1" /> {t("Marcar como Servida")}
+            {t("Marcar como Servida")}
           </Button>
           <Button
             size="sm"
             variant="destructive"
-            onClick={() => changeStatus(order.id, "cancelada")}
+            onClick={(e) => {
+              e.stopPropagation();
+              changeStatus(order.id, "cancelada");
+            }}
             className="flex-1"
           >
             <XCircle className="w-4 h-4 mr-1" /> {t("Cancelar")}
@@ -129,9 +133,12 @@ export default function ListaOrdenes() {
         <Button
           size="sm"
           className="flex-1"
-          onClick={() => changeStatus(order.id, "pagada")}
+          onClick={(e) => {
+            e.stopPropagation();
+            changeStatus(order.id, "pagada");
+          }}
         >
-          <DollarSign className="w-4 h-4 mr-1" /> {t("Pagar")}
+          {t("Pagar")}
         </Button>
       );
     }
@@ -163,8 +170,9 @@ export default function ListaOrdenes() {
             {filtered.map((order) => (
               <Card
                 key={order.id}
+                onClick={() => verOrden(order)}
                 className={cn(
-                  'border-2 transition-all',
+                  'border-2 transition-all cursor-pointer hover:shadow-lg',
                   STATUS_CLASSES[order.status],
                   highlight[order.id] && 'animate-pulse'
                 )}
@@ -193,7 +201,7 @@ export default function ListaOrdenes() {
                   )}
                 </CardContent>
                 {renderActions(order) && (
-                  <CardFooter className="flex gap-2">
+                  <CardFooter className="flex flex-wrap gap-2 justify-between mt-4">
                     {renderActions(order)}
                   </CardFooter>
                 )}

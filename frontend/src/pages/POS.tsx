@@ -934,7 +934,7 @@ const POS = () => {
                               className="flex-1"
                               onClick={() => handleResumeOrder(order)}
                             >
-                              <PlusCircle className="w-4 h-4 mr-1" /> {t("Agregar Artículos")}
+                            {t("Agregar")}
                             </Button>
                             {order.status === "preparando" && (
                               <Button
@@ -943,7 +943,7 @@ const POS = () => {
                                 className="flex-1"
                                 onClick={() => marcarComoServida(order.id)}
                               >
-                                🍽️ {t("Servida")}
+                                {t("Servida")}
                               </Button>
                             )}
                             <Button
@@ -952,7 +952,7 @@ const POS = () => {
                               className="flex-1"
                               onClick={() => handlePayOrder(order)}
                             >
-                              <DollarSign className="w-4 h-4 mr-1" /> {t("Pagar")}
+                              {t("Pagar")}
                             </Button>
                           </CardFooter>
                         </Card>
@@ -1058,23 +1058,21 @@ const POS = () => {
               {t("Cerrar")}
             </Button>
             <div className="flex gap-2">
-              <Button 
+              <Button
                 variant="outline"
                 onClick={() => {
                   handleResumeOrder(viewOrderDetails);
                   setShowOrderDetails(false);
                 }}
               >
-                <PlusCircle className="w-4 h-4 mr-1" />
-                {t("Agregar Artículos")}
+                {t("Agregar")}
               </Button>
-              <Button 
+              <Button
                 onClick={() => {
                   handlePayOrder(viewOrderDetails);
                   setShowOrderDetails(false);
                 }}
               >
-                <DollarSign className="w-4 h-4 mr-1" />
                 {t("Procesar Pago")}
               </Button>
             </div>

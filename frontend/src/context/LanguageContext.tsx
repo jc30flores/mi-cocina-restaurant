@@ -77,6 +77,7 @@ const translations: TranslationDictionary = {
   "cliente(s)": { en: "client(s)" },
   "Iniciada a las": { en: "Started at" },
   "Ver": { en: "View" },
+  "Agregar": { en: "Add" },
   "Agregar Artículos": { en: "Add Items" },
   "Pagar": { en: "Pay" },
   "Detalles de Orden": { en: "Order Details" },
