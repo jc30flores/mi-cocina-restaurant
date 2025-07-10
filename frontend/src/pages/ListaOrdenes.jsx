@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 import { io } from "socket.io-client";
 import MainLayout from "@/components/layouts/MainLayout";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -37,6 +38,7 @@ export default function ListaOrdenes() {
   const [filter, setFilter] = useState("all");
   const [highlight, setHighlight] = useState({});
   const socketRef = useRef(null);
+  const { t } = useLanguage();
 
   const load = async () => {
     try {
@@ -90,7 +92,14 @@ export default function ListaOrdenes() {
   });
 
   const changeStatus = async (id, status) => {
-    await updateOrderStatus(id, status);
+    try {
+      const updated = await updateOrderStatus(id, status);
+      setOrders((prev) =>
+        prev.map((o) => (o.id === id ? { ...o, ...updated } : o))
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const renderActions = (order) => {
@@ -102,7 +111,7 @@ export default function ListaOrdenes() {
             onClick={() => changeStatus(order.id, "servida")}
             className="flex-1"
           >
-            <CheckCircle className="w-4 h-4 mr-1" /> Servida
+            <CheckCircle className="w-4 h-4 mr-1" /> {t("Marcar como Servida")}
           </Button>
           <Button
             size="sm"
@@ -110,7 +119,7 @@ export default function ListaOrdenes() {
             onClick={() => changeStatus(order.id, "cancelada")}
             className="flex-1"
           >
-            <XCircle className="w-4 h-4 mr-1" /> Cancelar
+            <XCircle className="w-4 h-4 mr-1" /> {t("Cancelar")}
           </Button>
         </>
       );
@@ -122,7 +131,7 @@ export default function ListaOrdenes() {
           className="flex-1"
           onClick={() => changeStatus(order.id, "pagada")}
         >
-          <DollarSign className="w-4 h-4 mr-1" /> Pagar
+          <DollarSign className="w-4 h-4 mr-1" /> {t("Pagar")}
         </Button>
       );
     }
