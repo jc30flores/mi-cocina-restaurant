@@ -7,6 +7,7 @@ import {
   createOrder as apiCreateOrder,
   createOrderItem as apiCreateOrderItem,
   updateOrder as apiUpdateOrder,
+  createFullOrder,
   getTables,
   updateTable,
   getEmployees,
@@ -14,6 +15,7 @@ import {
   getSubcategories,
   getTableLink,
   payLinkedTables,
+  updateOrderStatus,
 } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 
@@ -129,6 +131,7 @@ interface POSContextType {
   resumeOrder: (order: Order) => void;
   loading: boolean;
   sending: boolean;
+  markOrderServed: (id: string) => Promise<void>;
 }
 
 const POSContext = createContext<POSContextType | undefined>(undefined);
@@ -564,17 +567,16 @@ export const POSProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // Change order status to sent
+  // Send order to backend and mark as "preparando"
   const sendOrder = async () => {
     if (!currentOrder || sending) return;
 
     setSending(true);
     try {
       if (currentOrder.id.startsWith('order-')) {
-        const orderData = {
+        const payload = {
           table_number: currentOrder.tableNumber,
           server: currentOrder.server,
-          status: 'sent',
           subtotal: currentOrder.subtotal,
           total: currentOrder.total,
           client_count: currentOrder.clientCount,
@@ -582,22 +584,18 @@ export const POSProvider = ({ children }: { children: React.ReactNode }) => {
           discount_value: currentOrder.discount?.value,
           tax: currentOrder.tax,
           tip: currentOrder.tip,
-        };
-        const savedOrder = await apiCreateOrder(orderData);
-        const orderId = savedOrder.id;
-        for (const item of currentOrder.items) {
-          await apiCreateOrderItem({
-            order_id: orderId,
+          items: currentOrder.items.map((item) => ({
             menu_item_id: item.menuItem.id,
             quantity: item.quantity,
             price: item.price,
             notes: item.notes || null,
             client_number: item.clientNumber,
-          });
-        }
+          })),
+        };
+        await createFullOrder(payload);
       } else {
         await apiUpdateOrder(currentOrder.id, {
-          status: 'sent',
+          status: 'preparando',
           subtotal: currentOrder.subtotal,
           total: currentOrder.total,
           client_count: currentOrder.clientCount,
@@ -705,6 +703,20 @@ export const POSProvider = ({ children }: { children: React.ReactNode }) => {
         title: 'Error',
         description: 'Failed to process payment. Please try again.',
         variant: 'destructive',
+      });
+    }
+  };
+
+  const markOrderServed = async (orderId: string) => {
+    try {
+      await updateOrderStatus(orderId, "servida");
+      await loadOrders();
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update order status. Please try again.",
+        variant: "destructive",
       });
     }
   };
@@ -864,6 +876,7 @@ export const POSProvider = ({ children }: { children: React.ReactNode }) => {
         applyDiscount,
         splitOrder,
         resumeOrder,
+        markOrderServed,
         loading,
         sending
       }}

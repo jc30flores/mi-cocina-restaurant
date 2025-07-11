@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify, request
 import uuid
 from flask_cors import CORS, cross_origin
+from flask_socketio import SocketIO
 from dotenv import load_dotenv
 import psycopg2
 from psycopg2 import errors as pg_errors
@@ -9,6 +10,14 @@ from psycopg2.extras import RealDictCursor
 
 # Load environment variables from .env file
 load_dotenv()
+
+# Allowed order statuses
+ALLOWED_ORDER_STATUS = (
+    "preparando",
+    "servida",
+    "pagada",
+    "cancelada",
+)
 
 # Database configuration from environment
 DB_HOST = os.getenv("PG_HOST", "cfls9h51f4i86c.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com")
@@ -33,6 +42,7 @@ def get_db_connection():
 
 # Initialize Flask app
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")
 # Configure CORS to allow requests from the frontend
 CORS(app, origins="*", supports_credentials=True)
 @app.after_request
@@ -43,7 +53,7 @@ def apply_cors_headers(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Allow-Credentials"] = "true"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
-    response.headers["Access-Control-Allow-Methods"] = "GET,PUT,POST,DELETE,OPTIONS"
+    response.headers["Access-Control-Allow-Methods"] = "GET,PUT,POST,DELETE,OPTIONS,PATCH"
     return response
 # Ensure 'shape', 'rotation', and 'color' columns exist in 'tables'
 try:
@@ -115,6 +125,19 @@ try:
     conn.close()
 except Exception as e:
     print(f"Warning: could not ensure 'access_code' column in 'employees': {e}")
+
+# Ensure 'status', 'order_type' and 'area' columns exist in 'orders'
+try:
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("ALTER TABLE orders ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'preparando';")
+    cur.execute("ALTER TABLE orders ADD COLUMN IF NOT EXISTS order_type TEXT;")
+    cur.execute("ALTER TABLE orders ADD COLUMN IF NOT EXISTS area TEXT;")
+    conn.commit()
+    cur.close()
+    conn.close()
+except Exception as e:
+    print(f"Warning: could not ensure 'status', 'order_type' or 'area' columns in 'orders': {e}")
 
 # -------------------------------------------------------------
 # Menu Categories Table (for Menu Management)
@@ -982,7 +1005,11 @@ def create_order():
     columns = []
     values = []
     placeholders = []
-    for key in ['table_number', 'server', 'status', 'subtotal', 'tax', 'tip', 'total', 'discount_type', 'discount_value', 'payment_method', 'paid', 'client_count']:
+    if 'status' not in data:
+        data['status'] = 'preparando'
+    if 'order_type' not in data:
+        data['order_type'] = 'dine-in' if table_number else 'takeout'
+    for key in ['table_number', 'server', 'status', 'order_type', 'subtotal', 'tax', 'tip', 'total', 'discount_type', 'discount_value', 'payment_method', 'paid', 'client_count']:
         if key in data:
             columns.append(key)
             values.append(data[key])
@@ -995,6 +1022,78 @@ def create_order():
     conn.commit()
     cur.close()
     conn.close()
+    socketio.emit('orden_actualizada', new_order)
+    return jsonify(new_order), 201
+
+# Create a new order with items in a single request
+@app.route('/api/ordenes', methods=['POST'])
+def create_order_with_items():
+    data = request.get_json() or {}
+    items = data.pop('items', [])
+    table_number = data.get('table_number') or data.get('mesa')
+
+    # Default fields
+    if 'status' not in data:
+        data['status'] = 'preparando'
+    if 'order_type' not in data:
+        data['order_type'] = 'dine-in' if table_number else 'takeout'
+
+    # Determine area based on first item's subcategory name containing 'grill'
+    area = data.get('area')
+    if not area and items:
+        first_id = items[0].get('menu_item_id')
+        if first_id:
+            conn = get_db_connection()
+            cur = conn.cursor()
+            cur.execute(
+                """
+                SELECT ms.name FROM menu_items mi
+                JOIN menu_subcategories ms ON ms.id = mi.subcategory_id
+                WHERE mi.id = %s
+                """,
+                (first_id,),
+            )
+            row = cur.fetchone()
+            cur.close()
+            conn.close()
+            if row and row[0] and 'grill' in row[0].lower():
+                area = 'grill'
+    if not area:
+        area = 'kitchen'
+    data['area'] = area
+
+    columns, values, placeholders = [], [], []
+    for key in ['table_number', 'server', 'status', 'order_type', 'area', 'subtotal', 'tax', 'tip', 'total', 'discount_type', 'discount_value', 'payment_method', 'paid', 'client_count']:
+        if key in data:
+            columns.append(key)
+            values.append(data[key])
+            placeholders.append('%s')
+    if not columns:
+        return jsonify({'error': 'No order data provided'}), 400
+
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    sql = f"INSERT INTO orders ({', '.join(columns)}) VALUES ({', '.join(placeholders)}) RETURNING *;"
+    cur.execute(sql, tuple(values))
+    new_order = cur.fetchone()
+    order_id = new_order['id']
+
+    for item in items:
+        item_cols, item_vals, item_ph = [], [], []
+        item['order_id'] = order_id
+        for k in ['order_id', 'menu_item_id', 'quantity', 'price', 'notes', 'client_number']:
+            if k in item and item[k] is not None:
+                item_cols.append(k)
+                item_vals.append(item[k])
+                item_ph.append('%s')
+        if item_cols:
+            item_sql = f"INSERT INTO order_items ({', '.join(item_cols)}) VALUES ({', '.join(item_ph)});"
+            cur.execute(item_sql, tuple(item_vals))
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    socketio.emit('orden_actualizada', new_order)
     return jsonify(new_order), 201
     
 @app.route('/api/orders', methods=['GET'])
@@ -1048,6 +1147,29 @@ def update_order(order_id):
         return jsonify(updated)
     else:
         return jsonify({"error": "Order not found"}), 404
+
+@app.route('/api/orders/<string:order_id>/status', methods=['PATCH'])
+@app.route('/api/ordenes/<string:order_id>/status', methods=['PATCH'])
+def update_order_status(order_id):
+    data = request.get_json() or {}
+    status = data.get('status')
+    if status not in ALLOWED_ORDER_STATUS:
+        return jsonify({'error': 'Invalid status'}), 400
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute(
+        "UPDATE orders SET status = %s, updated_at = NOW() WHERE id = %s RETURNING *;",
+        (status, order_id),
+    )
+    updated = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+    if updated:
+        socketio.emit('orden_actualizada', updated)
+        return jsonify(updated)
+    else:
+        return jsonify({'error': 'Order not found'}), 404
 
 @app.route('/api/orders/merge', methods=['POST'])
 def merge_orders_endpoint():
@@ -1879,7 +2001,7 @@ if __name__ == '__main__':
         attempts = 0
         while attempts < 3:
             try:
-                app.run(host='0.0.0.0', port=port, debug=True)
+                socketio.run(app, host='0.0.0.0', port=port, debug=True)
                 break
             except OSError as e:
                 if e.errno == 57:
